@@ -37,7 +37,7 @@ function addPiecePlayer(image, player, x, y, marginY, cantPiece){
     if(cantPiece > 0){
         addPiecePlayer(image, player, x, y, marginY, cantPiece);
     }
-
+    
 }
 
 function addPiece(x, y, image, player){
@@ -62,6 +62,7 @@ function onMouseDown(e){
         lastClickedPiece = clickPiece;
     }
     drawPiece();
+    board.draw();
 }
 
 function onMouseUp(e){
@@ -73,6 +74,7 @@ function onMouseMove(e){
         lastClickedPiece.setPosition(e.layerX, e.layerY);
         drawPiece();
     }
+    board.draw();
 }
 
 function clearCanvas(){
