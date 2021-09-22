@@ -1,10 +1,13 @@
 let canvas = document.getElementById("canvas");
+/** @type {CanvasRenderingContext2D} */
 let ctx = canvas.getContext("2d");
 let width = canvas.width;
 let height = canvas.height;
 
 const CANT_PIECE_BY_PLAYER = 10;
 const piecePixel = 40;
+let board = new Board(5, 5, ctx, width, height);
+
 
 let pieces = [];
 let lastClickedPiece = null;
@@ -23,6 +26,7 @@ image.onload = function(){
     player = 2;
     x = width - x;
     addPiecePlayer(image, player, x, y, marginY, cantPiece);
+    board.draw();
 }
 
 function addPiecePlayer(image, player, x, y, marginY, cantPiece){
@@ -33,6 +37,7 @@ function addPiecePlayer(image, player, x, y, marginY, cantPiece){
     if(cantPiece > 0){
         addPiecePlayer(image, player, x, y, marginY, cantPiece);
     }
+
 }
 
 function addPiece(x, y, image, player){
@@ -82,6 +87,8 @@ function findClickedFigure(x, y){
         }
     }
 }
+
+
 
 canvas.addEventListener('mousedown', onMouseDown, false);
 canvas.addEventListener('mouseup', onMouseUp, false);
