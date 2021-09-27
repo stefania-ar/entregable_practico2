@@ -1,20 +1,32 @@
 let canvas = document.getElementById("canvas");
 /** @type {CanvasRenderingContext2D} */
 let ctx = canvas.getContext("2d");
+canvas.width = 1350 ;
+canvas.height = 680 ;
 let width = canvas.width;
 let height = canvas.height;
 
 const CANT_PIECE_BY_PLAYER = 10;
 const piecePixel = 40;
+//se le pasa width y height para centrarlo.
 let board = new Board(5, 5, ctx, width, height);
-
+let frontBoard = new FrontBoard(5, 5, ctx, width, height);
+let matrixBoard = new MatrixBoard(5, 5, ctx, width, height);
+matrixBoard.draw();
 
 let pieces = [];
 let lastClickedPiece = null;
 let isMouseDown = false;
 
+board.draw();
+
 image = new Image(); //iniciar ruta
 image.src="img/piece.png";
+
+imageBoard = new Image(); //iniciar ruta
+imageBoard.src="img/ventana.png";
+
+
 
 image.onload = function(){
     let cantPiece = CANT_PIECE_BY_PLAYER;
@@ -26,7 +38,12 @@ image.onload = function(){
     player = 2;
     x = width - x;
     addPiecePlayer(image, player, x, y, marginY, cantPiece);
-    board.draw();
+    frontBoard.setImage(imageBoard);
+}
+
+imageBoard.onload = function(){
+    frontBoard.setImage(imageBoard);
+    frontBoard.draw();
 }
 
 function addPiecePlayer(image, player, x, y, marginY, cantPiece){
@@ -37,7 +54,6 @@ function addPiecePlayer(image, player, x, y, marginY, cantPiece){
     if(cantPiece > 0){
         addPiecePlayer(image, player, x, y, marginY, cantPiece);
     }
-    
 }
 
 function addPiece(x, y, image, player){
@@ -53,6 +69,7 @@ function drawPiece(){
 }
 
 function onMouseDown(e){
+    board.draw();
     isMouseDown = true;
     if(lastClickedPiece != null){
         lastClickedPiece = null;
@@ -62,23 +79,33 @@ function onMouseDown(e){
         lastClickedPiece = clickPiece;
     }
     drawPiece();
-    board.draw();
+    //board.draw();
+    frontBoard.draw();
 }
 
 function onMouseUp(e){
     isMouseDown = false;
+    board.draw();
+    drawPiece();
+    frontBoard.draw();
 }
 
 function onMouseMove(e){
+    board.draw();
     if(isMouseDown && lastClickedPiece != null){
         lastClickedPiece.setPosition(e.layerX, e.layerY);
         drawPiece();
+    }else{
+        drawPiece();
     }
-    board.draw();
+
+    frontBoard.draw();
 }
+
 
 function clearCanvas(){
     ctx.clearRect(0, 0, width, height);
+    board.draw();
 }
 
 function findClickedFigure(x, y){

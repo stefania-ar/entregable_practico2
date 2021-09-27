@@ -1,6 +1,5 @@
 class Board {
 
-
     constructor(cantX, cantY, ctx, width, height) {
         this.cantX = cantX;
         this.cantY = cantY;
@@ -22,20 +21,20 @@ class Board {
         for (let x = 0; x < this.width; x++) {
 
             for (let y = 0; y < this.height; y++) {
-                this.setPixel(ImageData, x, y, 0, 0, 255, 255);
+                this.setPixel(ImageData, x, y, 255, 0, 0, 255);
             }
         }
-        console.log(this.centerY());
+        //console.log(this.centerY());
 
         this.ctx.putImageData(ImageData, this.centerX(), this.centerY()); //ver qué onda por que tira long error
     };
 
     setPixel(imageData, x, y, r, g, b, a){
-            let index = (x+y*imageData.height)*4;
-            imageData.data[index+0] = r;
-            imageData.data[index+1] = g;
-            imageData.data[index+2] = b;
-            imageData.data[index+3] = a;
+        let index = (x+y*imageData.height)*4;
+        imageData.data[index+0] = r;
+        imageData.data[index+1] = g;
+        imageData.data[index+2] = b;
+        imageData.data[index+3] = a;
     }
 
     getWidth(){
