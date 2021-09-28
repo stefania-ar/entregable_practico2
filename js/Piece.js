@@ -1,24 +1,34 @@
 class Piece{
 
-    constructor(x, y, image, piecePixel, ctx, player){
+    constructor(x, y, image, piecePixel, ctx, player, radio){
         this.x = x;
         this.y = y;
         this.ctx = ctx;
         this.player = player;
         this.image = image;
         this.piecePixel = piecePixel;
+        this.radio=radio;
     }
 
     draw(){
-        this.ctx.drawImage(image, this.x, this.y, this.piecePixel, this.piecePixel);
+        ctx.beginPath();
+        this.ctx.strokeStyle = "black";
+        this.ctx.arc(this.x, this.y, this.radio, 0, 2 * Math.PI);
+        this.ctx.fillStyle = "black";
+        this.ctx.fill();
+        this.ctx.stroke();
+        this.ctx.drawImage(image, this.x-this.radio, this.y-this.radio, this.piecePixel, this.piecePixel);
     }
 
     isPointInside(x, y){
-        if(x >= this.x && x <= this.x + this.piecePixel && y >= this.y && y <= this.y + this.piecePixel){
-            return true;
-        }else{
-            return false;
-        }
+        let _x = this.x - x; 
+        let _y = this.y - y; 
+        return Math.sqrt(_x*_x+_y*_y)<this.radio;
+      
+    }
+
+    isPointInsideRange(x_ini,x_fin, y_ini, y_fin){
+        return (this.getX()> x_ini && this.getX< x_fin) && (this.getY()> y_ini && this.getY< y_fin);
     }
 
     setPosition(x, y){
