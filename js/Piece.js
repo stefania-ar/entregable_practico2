@@ -58,4 +58,7 @@ class Piece{
         return this.y;
     }
 
+    getPlayer(){
+        return this.player;
+    }
 }

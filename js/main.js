@@ -17,14 +17,17 @@ const piecePixel = radio*2;
 let board = new Board(dimension, dimension, ctx, width, height);
 let frontBoard = new FrontBoard(dimension, dimension, ctx, width, height);
 let matrixBoard = new MatrixBoard(dimension, dimension, ctx, width, height);
-matrixBoard.draw();
-console.log(matrixBoard.getCells());
+let game = new Game(matrixBoard);
+console.log(game.getBoard().getCells()[1]);
+//console.log(matrixBoard.getCells());
 
 let pieces = [];
 let lastClickedPiece = null;
 let isMouseDown = false;
 
 board.draw();
+//arreglar que se pinten las dos partes del tablero al iniciar
+frontBoard.draw();
 
 image = new Image(); //iniciar ruta
 image.src="img/piece.png";
@@ -43,12 +46,10 @@ image.onload = function(){
     player = 2;
     x = width - x;
     addPiecePlayer(image, player, x, y, marginY, cantPiece, radio);
-    matrixBoard.draw();
     frontBoard.setImage(imageBoard);
 }
 
 imageBoard.onload = function(){
-    matrixBoard.draw();
     frontBoard.setImage(imageBoard);
     frontBoard.draw();
 }
@@ -77,7 +78,6 @@ function drawPiece(){
 let clickPiece;
 
 function onMouseDown(e){
-    matrixBoard.draw();
     board.draw();
     isMouseDown = true;
     if(lastClickedPiece != null){
@@ -94,23 +94,25 @@ function onMouseDown(e){
 
 function onMouseUp(e){
     isMouseDown = false;
-    let x= clickPiece.getX();
-    matrixBoard.draw();
-    board.draw();
-    drawPiece();
-    frontBoard.draw();
-    if(matrixBoard.whichColumn(x) > 0){
-        let cell = matrixBoard.lastFreeCell(matrixBoard.whichColumn(x));
-        cell.setPiece(clickPiece);
-        //hasta acá tiene que ir la ficha
-        let xCell= cell.getXStart()+((cell.getXEnd()-cell.getXStart())/2);
-        let yCell= cell.getYStart()+((cell.getYEnd()-cell.getYStart())/2);
-        clickPiece.setPosition(xCell, yCell);
+    if(clickPiece != null){
+        let x= clickPiece.getX();
+        board.draw();
+        drawPiece();
+        frontBoard.draw();
+        if(matrixBoard.whichColumn(x) > 0){
+            let cell = matrixBoard.lastFreeCell(matrixBoard.whichColumn(x));
+            cell.setPiece(clickPiece);
+            //hasta acá tiene que ir la ficha
+            let xCell= cell.getXStart()+((cell.getXEnd()-cell.getXStart())/2);
+            let yCell= cell.getYStart()+((cell.getYEnd()-cell.getYStart())/2);
+            clickPiece.setPosition(xCell, yCell);
+            //acá bloquear que se pueda mover la ficha
+            console.log(matrixBoard.getCells());
+        }
     }
 }
 
 function onMouseMove(e){
-    matrixBoard.draw();
     board.draw();
     if(isMouseDown && lastClickedPiece != null){
         lastClickedPiece.setPosition(e.layerX, e.layerY);
@@ -125,7 +127,6 @@ function onMouseMove(e){
 
 function clearCanvas(){
     ctx.clearRect(0, 0, width, height);
-    matrixBoard.draw();
     board.draw();
 }
 

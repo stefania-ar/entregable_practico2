@@ -1,4 +1,5 @@
 class MatrixBoard extends Board {
+
     constructor(cantX, cantY, ctx, width, height) {
         super(cantX, cantY, ctx, width, height);
         this.cells = this.createArrayCells();
@@ -38,7 +39,6 @@ class MatrixBoard extends Board {
     lastFreeCell(column){
         let lastFreeCell;
         let cells = this.filterCells(column);
-        console.log(cells);
         let lastFind = false;
         let i = this.cantY-1;
         while(!lastFind && i>=0){
@@ -78,8 +78,8 @@ class MatrixBoard extends Board {
     //retorna el numero de columna en el que se encuentra
     whichColumn(x) {
         if(this.isPieceWithinWidth(x)){
-            let column = 0;
-            let i = 0;
+            let column = 1;
+            let i = this.PosX;
             let find = false;
 
             while (!find && i < this.PosX + this.width) {
@@ -89,15 +89,13 @@ class MatrixBoard extends Board {
                     i += this.pixels;
                     column++;
                 }
-
             }
-            return column-2;
+            return column;
         }else{
             return -1;
         }
-
     }
-/* 
+/*
     pixelsXcolumn(nroCol) {
         let fin = this.PosX + (this.pixels * nroCol);
         let ini = fin - this.pixels;

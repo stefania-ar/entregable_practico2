@@ -52,4 +52,8 @@ class Board {
     centerY(){
         return ( this.heightCanvas - (this.height)) / 2;
     }
+
+    getCantX(){
+        return this.cantX;
+    }
 }
