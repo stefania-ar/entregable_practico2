@@ -18,6 +18,7 @@ let board = new Board(dimension, dimension, ctx, width, height);
 let frontBoard = new FrontBoard(dimension, dimension, ctx, width, height);
 let matrixBoard = new MatrixBoard(dimension, dimension, ctx, width, height);
 matrixBoard.draw();
+console.log(matrixBoard.getCells());
 
 let pieces = [];
 let lastClickedPiece = null;
@@ -92,16 +93,20 @@ function onMouseDown(e){
 }
 
 function onMouseUp(e){
-    let a= clickPiece.getX();
-    let b= clickPiece.getY();
     isMouseDown = false;
+    let x= clickPiece.getX();
     matrixBoard.draw();
     board.draw();
     drawPiece();
     frontBoard.draw();
-    matrixBoard.isPieceWithinCell(a,b);
-   // console.log(clickPiece);
-    
+    if(matrixBoard.whichColumn(x) > 0){
+        let cell = matrixBoard.lastFreeCell(matrixBoard.whichColumn(x));
+        cell.setPiece(clickPiece);
+        //hasta acá tiene que ir la ficha
+        let xCell= cell.getXStart()+((cell.getXEnd()-cell.getXStart())/2);
+        let yCell= cell.getYStart()+((cell.getYEnd()-cell.getYStart())/2);
+        clickPiece.setPosition(xCell, yCell);
+    }
 }
 
 function onMouseMove(e){

@@ -1,6 +1,22 @@
 class MatrixBoard extends Board {
     constructor(cantX, cantY, ctx, width, height) {
         super(cantX, cantY, ctx, width, height);
+        this.cells = this.createArrayCells();
+    }
+
+    createArrayCells(){
+        let arrayCells = [];
+        let nroColumn = 1;
+        for (let x = this.PosX; x < this.PosX+this.width; x+=this.pixels) {
+            let nroRow = 1;
+            for (let y = this.posY; y < this.posY+this.height; y+=this.pixels) {
+                let cell = new Cell(nroColumn, nroRow, x, x+(this.pixels-1), y, y+(this.pixels-1), null);
+                arrayCells.push(cell);
+                nroRow++;
+            }
+            nroColumn++;
+        }
+        return arrayCells;
     }
 
     draw() {
@@ -18,84 +34,70 @@ class MatrixBoard extends Board {
         this.ctx.putImageData(ImageData, this.centerX(), this.centerY());
     };
 
+    //retorna la ultima celda libre
+    lastFreeCell(column){
+        let lastFreeCell;
+        let cells = this.filterCells(column);
+        console.log(cells);
+        let lastFind = false;
+        let i = this.cantY-1;
+        while(!lastFind && i>=0){
+            if(cells[i].getPiece() == null){
+                lastFreeCell = cells[i];
+                lastFind = true;
+            }else{
+                i--;
+            }
+        }
+        //si no encuentra una celda libre retorna null.
+        return lastFreeCell;
+    }
+    //filtra las celdas para quedarme con las de una columna en especifico
+    filterCells(column){
+        let arrayFilterCells = [];
+        let retunrAllCells = false;
+        let cont = this.cantY;
+        let i = 0;
+        while(!retunrAllCells && i<this.cells.length){
+            if(this.cells[i].getNroColumn() == column){
+                arrayFilterCells.push(this.cells[i]);
+                cont--;
+                if(cont == 0){
+                    retunrAllCells = true;
+                }
+            }
+            i++;
+        }
+        return arrayFilterCells;
+    }
+    //pregunta si la pieza está dentro del rango del tablero
     isPieceWithinWidth(x) {
-        console.log(x);
         return (x > this.PosX && x < this.PosX + this.width);
 
     }
+    //retorna el numero de columna en el que se encuentra
+    whichColumn(x) {
+        if(this.isPieceWithinWidth(x)){
+            let column = 0;
+            let i = 0;
+            let find = false;
 
-    isPieceWithinCell(x,y) {
-        console.log(this.isPieceWithinWidth(x));
-        if (this.isPieceWithinWidth(x)) {
-            this.whichCell(x);
-            this.whichCellY(y);
-            console.log("entro");
-        }
-    }
+            while (!find && i < this.PosX + this.width) {
+                if (x >= i && x <= i + this.pixels) {
+                    find = true;
+                } else {
+                    i += this.pixels;
+                    column++;
+                }
 
-    whichCell(x) {
-        let celda = 0;
-        let i = 0;
-        let bool = false;
-
-        while (!bool && i < this.PosX + this.width) {
-            if (x >= i && x <= i + this.pixels) {
-                bool = true;
-            } else {
-                i += this.pixels;
-                celda++;
             }
-
+            return column-2;
+        }else{
+            return -1;
         }
-        console.log(celda);
-        this.freeCellY(celda);
-        return celda;
+
     }
-
-    whichCellY(y) {
-        let celda = 1;
-        let i = 0;
-        let bool = false;
-
-        while (!bool && i < this.posY + this.height) {
-            if (y >= i && y <= i + this.pixels) {
-                bool = true;
-            } else {
-                i += this.pixels;
-                celda++;
-            }
-
-        }
-        console.log("celda Y "+ celda);
-        this.freeCellY(celda);
-        return celda;
-    }
-
-    isCellYOccupied(nroCelda, celdaY, array) {
-
-        let i = 0;
-        let bool = false;
-
-        let x_ini=this.pixelsXcolumn(nroCelda).x_ini;
-        let x_fin=this.pixelsXcolumn(nroCelda).x_fin;
-        let y_ini=this.pixelsYrow(celdaY).y_ini;
-        let y_fin= this-this.pixelsYrow(celdaY).y_fin;
-
-        while (!bool && i<array.lenght) {
-            if (array[i].isPointInsideRange(x_ini,x_fin, y_ini, y_fin) ) {
-                bool = true;
-            } else {
-                i ++;
-            }
-            //BUSCAR LA FILA LIBRE PARA DEVOLVERLA Y LLEVAR LA FICHA HASTA AHÍ
-            //GUARDAR CELDA EN Y Y EN X DONDE ESTÁ
-            //HACER UNA CLASE CELDA QUE SEPA SUS VALORES
-        }
-        console.log(celdaY);
-        this.pixelsYcolumn(celdaY);
-        return bool;
-    }
-
+/* 
     pixelsXcolumn(nroCol) {
         let fin = this.PosX + (this.pixels * nroCol);
         let ini = fin - this.pixels;
@@ -115,5 +117,9 @@ class MatrixBoard extends Board {
             y_fin: fin,
             y_ini: ini
         }
+    }
+*/
+    getCells(){
+        return this.cells;
     }
 }

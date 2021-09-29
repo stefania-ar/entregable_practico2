@@ -21,10 +21,17 @@ class Piece{
     }
 
     isPointInside(x, y){
-        let _x = this.x - x; 
-        let _y = this.y - y; 
+        let _x = this.x - x;
+        let _y = this.y - y;
         return Math.sqrt(_x*_x+_y*_y)<this.radio;
-      
+    }
+
+    inCell(cell){
+        let xStart = cell.getXStart();
+        let xEnd = cell.getXEnd();
+        let yStart = cell.getYStart();
+        let yEnd = cell.getYEnd();
+        return this.getX()> xStart && this.getX< xEnd && this.getY()> yStart && this.getY< yEnd;
     }
 
     isPointInsideRange(x_ini,x_fin, y_ini, y_fin){
