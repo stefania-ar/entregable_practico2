@@ -48,4 +48,20 @@ class Cell{
     getNroColumn(){
         return this.nroColumn;
     }
+
+    getNroRow(){
+        return this.nroRow;
+    }
+
+    getCell(nroCol, nroRow){
+        console.log("ESTOY en cell. COL "+nroCol + " "+ this.getNroColumn() + " ROW " +nroRow);
+
+        if((nroCol=== this.getNroColumn()) && (nroRow=== this.getNroRow())){
+            return this;
+        }
+    }
+
+    hasPiece(){
+        return this.piece !=null;
+    }
 }

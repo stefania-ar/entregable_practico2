@@ -120,4 +120,14 @@ class MatrixBoard extends Board {
     getCells(){
         return this.cells;
     }
+
+    getCellByPosition(y, x){
+        console.log("entro al cell")
+        for (let i = 0; i < this.cells.length; i++) {
+            if( this.cells[i].getNroColumn()===y && this.cells[i].getNroRow()===x){
+                return this.cells[i];
+            };
+        }
+        
+    }
 }

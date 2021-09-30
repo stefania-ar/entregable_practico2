@@ -21,6 +21,8 @@ let game = new Game(matrixBoard);
 console.log(game.getBoard().getCells()[1]);
 //console.log(matrixBoard.getCells());
 
+//constantes
+
 let pieces = [];
 let lastClickedPiece = null;
 let isMouseDown = false;
@@ -110,7 +112,10 @@ function onMouseUp(e){
             console.log(matrixBoard.getCells());
         }
     }
+    //let p=matrixBoard.getCellByPosition(6,1);
+    //console.log(p);
 }
+game.searchWinner();
 
 function onMouseMove(e){
     board.draw();
