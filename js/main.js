@@ -79,6 +79,56 @@ function drawPiece(){
 }
 let clickPiece;
 
+let rangeMove;
+let xTransition;
+let yTransition;
+let xCell;
+let yCell;
+
+function initTransition(){
+   transition();
+}
+
+function transition(){
+    console.log("entra");
+    clickPiece.setPosition(xTransition, yTransition);
+    drawPiece();
+    frontBoard.draw();
+    yTransition += rangeMove;
+ if(yTransition <= yCell+1){
+    window.requestAnimationFrame(transition);
+  }
+}
+
+function onMouseUp(e){
+    isMouseDown = false;
+    if(clickPiece != null){
+        let x= clickPiece.getX();
+        let y= clickPiece.getY();
+        board.draw();
+        drawPiece();
+        frontBoard.draw();
+        if(matrixBoard.whichColumn(x) > 0){
+            let cell = matrixBoard.lastFreeCell(matrixBoard.whichColumn(x));
+            cell.setPiece(clickPiece);
+            //hasta acá tiene que ir la ficha
+            xCell= cell.getXStart()+((cell.getXEnd()-cell.getXStart())/2);
+            yCell= cell.getYStart()+((cell.getYEnd()-cell.getYStart())/2);
+            //clickPiece.setPosition(xCell, yCell);
+            rangeMove = (yCell-y)/30;
+            xTransition = xCell;
+            yTransition = y;
+            initTransition();
+            //acá bloquear que se pueda mover la ficha
+            console.log(matrixBoard.getCells());
+        }
+    }
+    //let p=matrixBoard.getCellByPosition(6,1);
+    //console.log(p);
+}
+
+game.searchWinner();
+
 function onMouseDown(e){
     board.draw();
     isMouseDown = true;
@@ -93,29 +143,6 @@ function onMouseDown(e){
     //board.draw();
     frontBoard.draw();
 }
-
-function onMouseUp(e){
-    isMouseDown = false;
-    if(clickPiece != null){
-        let x= clickPiece.getX();
-        board.draw();
-        drawPiece();
-        frontBoard.draw();
-        if(matrixBoard.whichColumn(x) > 0){
-            let cell = matrixBoard.lastFreeCell(matrixBoard.whichColumn(x));
-            cell.setPiece(clickPiece);
-            //hasta acá tiene que ir la ficha
-            let xCell= cell.getXStart()+((cell.getXEnd()-cell.getXStart())/2);
-            let yCell= cell.getYStart()+((cell.getYEnd()-cell.getYStart())/2);
-            clickPiece.setPosition(xCell, yCell);
-            //acá bloquear que se pueda mover la ficha
-            console.log(matrixBoard.getCells());
-        }
-    }
-    //let p=matrixBoard.getCellByPosition(6,1);
-    //console.log(p);
-}
-game.searchWinner();
 
 function onMouseMove(e){
     board.draw();
