@@ -128,6 +128,11 @@ class MatrixBoard extends Board {
                 return this.cells[i];
             };
         }
-        
+    }
+
+    cleanCells(){
+        this.cells.forEach(function(cell) {
+            cell.setPiece(null);
+        });
     }
 }

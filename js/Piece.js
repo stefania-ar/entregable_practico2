@@ -1,8 +1,9 @@
 class Piece{
 
-    constructor(x, y, image, piecePixel, ctx, player, radio){
+    constructor(x, y, fill, image, piecePixel, ctx, player, radio){
         this.x = x;
         this.y = y;
+        this.fill = fill;
         this.ctx = ctx;
         this.player = player;
         this.image = image;
@@ -12,9 +13,9 @@ class Piece{
 
     draw(){
         ctx.beginPath();
-        this.ctx.strokeStyle = "black";
+        //this.ctx.strokeStyle = "black";
         this.ctx.arc(this.x, this.y, this.radio, 0, 2 * Math.PI);
-        this.ctx.fillStyle = "black";
+        this.ctx.fillStyle = this.fill;
         this.ctx.fill();
         this.ctx.stroke();
         this.ctx.drawImage(image, this.x-this.radio, this.y-this.radio, this.piecePixel, this.piecePixel);
@@ -60,5 +61,9 @@ class Piece{
 
     getPlayer(){
         return this.player;
+    }
+
+    setFill(fill){
+        this.fill = fill;
     }
 }
