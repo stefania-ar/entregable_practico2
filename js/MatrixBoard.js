@@ -1,7 +1,7 @@
 class MatrixBoard extends Board {
 
-    constructor(cantX, cantY, ctx, width, height) {
-        super(cantX, cantY, ctx, width, height);
+    constructor(cantX, cantY, ctx, width, height, pixels) {
+        super(cantX, cantY, ctx, width, height, pixels);
         this.cells = this.createArrayCells();
     }
 

@@ -8,10 +8,6 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!--<button id="btnRed">red</button>
-    <button id="btnBlue">blue</button>
-    <button id="btnGreen">green</button>
-    <button id="btnYelow">yellow</button>-->
     <form id="formColorPlayer1">
         <p>color de fichas del jugador 1:</p>
         <div>
@@ -38,7 +34,7 @@
           <label for="red">red</label>
         </div>
     </form>
-    <p class="pColor" id="pColor"></p>
+    <p class="pColor" id="pColor"></p><!--párrafo para mostrar mensaje de que el color ya fue elegido-->
     <form id="dimensionBoard">
         <p>Dimensión del tablero:</p>
         <div>
@@ -50,6 +46,7 @@
           <label for="dimension8">8</label>
         </div>
     </form>
+    <p class="pStartPlayer" id="pStartPlayer"></p><!--párrafo para mostrar que jugador comienza el juego-->
     <canvas class="canvas" id="canvas"></canvas>
     <div class="hidenwinner" id="winner">
         <h1 id="winnerPlayer"></h1>

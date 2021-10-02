@@ -5,8 +5,16 @@ class Game {
     }
 
 
-    playerTurnControl(player, lastPlayer){
-        return player == lastPlayer;
+    playerTurnControl(lastTurn, newTurn){
+        return lastTurn != newTurn;
+    }
+
+    changeTurn(lastTurn){
+        if(lastTurn == 1){
+            return 2;//newTurn
+        }else{
+            return 1;//newTurn
+        }
     }
 
     getBoard(){
@@ -95,7 +103,8 @@ class Game {
         let player, playerNexPiece;
         let cells = this.board.getCells();
         let contPiece = 1;
-        for(let ix = i; ix<i+5; ix++){
+        let cantFila = this.board.getCantY()-1;
+        for(let ix = i; ix<i+cantFila; ix++){
             if(contPiece < 4){
                 let piece = cells[ix].getPiece();
                 let nexPiece = cells[ix+1].getPiece();
@@ -126,9 +135,11 @@ class Game {
     searchVertical(){
         let i = 0;
         let winnerInRow = {winner: false, player: null};
-        while(!winnerInRow.winner && i <this.board.getCells().length-5){
+        let cantFila = this.board.getCantY();
+        let cantColumn = this.board.getCantX()-1;
+        while(!winnerInRow.winner && i <this.board.getCells().length-cantColumn){
             winnerInRow = this.winnerInColumn(i);
-            i+=6;
+            i+=cantFila;
         }
         return winnerInRow;
     }

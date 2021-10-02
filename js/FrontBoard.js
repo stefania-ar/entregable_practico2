@@ -1,14 +1,14 @@
 class FrontBoard extends Board{
 
-    constructor(cantX, cantY, ctx, width, height){
-        super(cantX, cantY, ctx, width, height);
+    constructor(cantX, cantY, ctx, width, height, pixels){
+        super(cantX, cantY, ctx, width, height, pixels);
         this.image = new Image();
     }
 
     draw(){
-        for(let y = this.centerY(); y<this.centerY()+this.getHeight(); y+=100){
-           for(let x = this.centerX(); x< this.centerX()+this.getWidth(); x+=100){
-                this.ctx.drawImage(this.image, x, y, 100, 100);
+        for(let y = this.centerY(); y<this.centerY()+this.getHeight(); y+=this.pixels){
+           for(let x = this.centerX(); x< this.centerX()+this.getWidth(); x+=this.pixels){
+                this.ctx.drawImage(this.image, x, y, this.pixels, this.pixels);
             }
         }
     }

@@ -2,22 +2,22 @@
 class ViewControl{
 
     viewWinner(div,canvas){
-        div.className = "showWinner";
-        canvas.className = "hidenCanvas";
+        div.className = "show";
+        canvas.className = "hiden";
     }
 
-    hidenWinner(div){
-        div.className = "hidenwinner";
-        canvas.className = "showCanvas";
+    hidenWinner(div, canvas){
+        div.className = "hiden";
+        canvas.className = "show";
     }
 
-    hidenPColor(p){
+    hidenParagraph(p){
         //classList.remove("");
-        p.className = "hidenPColor";
+        p.className = "hiden";
     }
-    showPColor(p){
+    showParagraph(p){
         //classList.remove("");
-        p.className = "showPColor";
+        p.className = "show";
     }
 
     /*loadBoard(){
@@ -42,4 +42,16 @@ class ViewControl{
           return entry[1];
         }
     }
+
+    changeStartingPlayerParagraph(p, lastPlayer){
+        let startPlayer;
+        if(lastPlayer == 2){
+            startPlayer = 1;
+        }else{
+            startPlayer = 2;
+        }
+        p.innerHTML = "Comienza el jugador " + startPlayer;
+        this.showParagraph(p);
+    }
+
 }

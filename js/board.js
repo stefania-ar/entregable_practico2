@@ -1,9 +1,9 @@
 class Board {
 
-    constructor(cantX, cantY, ctx, width, height) {
+    constructor(cantX, cantY, ctx, width, height, pixels) {
         this.cantX = cantX;
         this.cantY = cantY;
-        this.pixels = 100;
+        this.pixels = pixels;
         /** @type {CanvasRenderingContext2D} */
         this.ctx = ctx;
         this.widthCanvas = width;
@@ -55,6 +55,9 @@ class Board {
 
     getCantX(){
         return this.cantX;
+    }
+    getCantY(){
+        return this.cantY;
     }
 
     setDimension(dimension){
