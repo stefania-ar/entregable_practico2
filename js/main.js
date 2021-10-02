@@ -10,8 +10,9 @@ canvas.height = window.innerHeight-20;
 let width = canvas.width;
 let height = canvas.height;
 
-let dimension=6;
-const CANT_PIECE_BY_PLAYER = dimension*2;
+let formDimension = document.getElementById("dimensionBoard");
+let dimension=Number(extractDimension(formDimension));
+let cantPieceByPlayer = (dimension*dimension)/2;
 let radio= 30;
 
 //Este es el tamaño de la imagen
@@ -55,12 +56,19 @@ imageBoard.onload = function(){
     frontBoard.draw();
 }
 
+function extractDimension(form){
+    var data = new FormData(form);
+    for (const entry of data) {
+      return entry[1];
+    }
+}
+
 function initPieces(){
-    let cantPiece = CANT_PIECE_BY_PLAYER;
+    let cantPiece = cantPieceByPlayer;
     let player = 1;
     let y = 50;
     let x = piecePixel;
-    let marginY = (radio*2)+1;
+    let marginY = (radio*2.3);
     addPiecePlayer(image, player, x, y, fill1, marginY, cantPiece, radio);
     player = 2;
     x = width - x;
@@ -69,6 +77,34 @@ function initPieces(){
 }
 
 function addPiecePlayer(image, player, x, y, fill, marginY, cantPiece, radio){
+    let cantPieceByRow = Math.round(cantPieceByPlayer / 2);
+    if(cantPieceByRow>10){
+        cantPieceByRow = Math.round(cantPieceByPlayer / 3);
+        if(cantPiece == cantPieceByRow){
+            y = 50;
+            if(player == 1){
+                x+=piecePixel+(piecePixel/2);
+            }else{
+                x-=piecePixel+(piecePixel/2);
+            }
+        }else if(cantPiece == cantPieceByRow*2){
+            y = 50;
+            if(player == 1){
+                x+=piecePixel+(piecePixel/2);
+            }else{
+                x-=piecePixel+(piecePixel/2);
+            }
+        }
+    }else{
+        if(cantPiece == cantPieceByRow){
+            y = 50;
+            if(player == 1){
+                x+=piecePixel+(piecePixel/2);
+            }else{
+                x-=piecePixel+(piecePixel/2);
+            }
+        }
+    }
     addPiece(x, y, fill, image, player, radio);
     drawPiece();
     y += marginY;
@@ -233,4 +269,21 @@ document.getElementById("formColorPlayer2").addEventListener("change",function(e
         viewControl.showPColor(pColor);
         pColor.innerHTML = "El color "+fill2+" ya se encuentra elegido por el otro jugador.";
     }
+});
+//cambiar diensión de tablero
+document.getElementById("dimensionBoard").addEventListener("change",function(e){
+    //clearCanvas();
+    dimension = Number(extractDimension(this));
+    cantPieceByPlayer = (dimension*dimension)/2;
+    /*board = new Board(dimension, dimension, ctx, width, height);
+    frontBoard = new FrontBoard(dimension, dimension, ctx, width, height);
+    matrixBoard = new MatrixBoard(dimension, dimension, ctx, width, height);*/
+    board.setDimension(dimension);
+    frontBoard.setDimension(dimension);
+    matrixBoard.setDimension(dimension);
+    board.draw();
+    pieces = [];
+    initPieces();
+    frontBoard.draw();
+
 });

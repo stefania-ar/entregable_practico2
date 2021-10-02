@@ -56,4 +56,13 @@ class Board {
     getCantX(){
         return this.cantX;
     }
+
+    setDimension(dimension){
+        this.cantX = dimension;
+        this.cantY = dimension;
+        this.width= this.pixels * this.cantX;
+        this.height= this.pixels * this.cantY;
+        this.posY= this.centerY();
+        this.PosX= this.centerX();
+    }
 }

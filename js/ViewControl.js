@@ -38,7 +38,6 @@ class ViewControl{
 
     readColor(form){
         var data = new FormData(form);
-        console.log(data);
         for (const entry of data) {
           return entry[1];
         }

@@ -39,6 +39,17 @@
         </div>
     </form>
     <p class="pColor" id="pColor"></p>
+    <form id="dimensionBoard">
+        <p>Dimensión del tablero:</p>
+        <div>
+          <input type="radio" id="dimension4" name="dimensionBoard" value="4" >
+          <label for="dimension4">4</label>
+          <input type="radio" id="dimension6"  name="dimensionBoard" value="6" checked>
+          <label for="dimension6">6</label>
+          <input type="radio" id="dimension8"  name="dimensionBoard" value="8">
+          <label for="dimension8">8</label>
+        </div>
+    </form>
     <canvas class="canvas" id="canvas"></canvas>
     <div class="hidenwinner" id="winner">
         <h1 id="winnerPlayer"></h1>

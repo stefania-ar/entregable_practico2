@@ -135,4 +135,10 @@ class MatrixBoard extends Board {
             cell.setPiece(null);
         });
     }
+
+    setDimension(dimension){
+        super.setDimension(dimension);
+        this.cells = [];
+        this.cells = this.createArrayCells();
+    }
 }
