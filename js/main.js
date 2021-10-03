@@ -43,6 +43,7 @@ let game = new Game(matrixBoard);
 let viewControl = new ViewControl();
 //variable que determina si el juego comenzó
 let start = false;
+let gameEnd = false;
 //Array de almacenamiento de las piezas del juego
 let pieces = [];
 //formulario del DOM de colores de piezas de los jugadores
@@ -178,7 +179,8 @@ function onMouseUp(e){
         drawPiece();
         frontBoard.draw();
         if(matrixBoard.whichColumn(x) > 0){
-            let cell = matrixBoard.lastFreeCell(matrixBoard.whichColumn(x));
+            let cell = matrixBoard.lastFreeCell(matrixBoard.whichColumn(x)).lastFreeCell;
+            let posCelda= matrixBoard.lastFreeCell(matrixBoard.whichColumn(x)).posEnArreglo;
             cell.setPiece(clickPiece);
             clickPiece.setInCell(true);
             //hasta acá tiene que ir la ficha
@@ -193,12 +195,19 @@ function onMouseUp(e){
             //acá bloquear que se pueda mover la ficha
             //console.log(matrixBoard.getCells());
             //let winner = game.searchWinner();
-            let winner = game.searchWinner();
+            let winner = game.searchWinner(cell.getNroColumn(), cell.getNroRow(), posCelda);
+            
             //console.log(winner.winner);
             //console.log(winner.player);
-            if(winner.winner){
-                h1.innerHTML = "Ganó el jugador "+winner.player;
-                viewControl.viewWinner(div, canvas);
+            if(winner != null){
+                gameEnd= true;
+                setTimeout(function(){
+                    viewControl.changeStartingPlayerParagraph(pStartPlayer, lastTurn);
+                    h1.innerHTML = "Ganó el jugador "+winner;
+                    viewControl.viewWinner(div, canvas);
+                    
+                    console.log(lastTurn+ " en funcion final. "+ newTurn);
+                }, 4000);
             }
         }
     }
@@ -209,14 +218,15 @@ function onMouseUp(e){
 function onMouseDown(e){
     board.draw();
     isMouseDown = true;
-    if(lastClickedPiece != null){
-        if(lastClickedPiece.getInCell()){
+    if(lastClickedPiece != null && gameEnd===false){
+        if(lastClickedPiece.getInCell() && gameEnd===false){
             lastTurn = lastClickedPiece.getPlayer();
+            console.log(lastTurn);
         }
         lastClickedPiece = null;
     }
     clickPiece = findClickedFigure(e.layerX, e.layerY);
-    if(clickPiece  != null){
+    if(clickPiece  != null && gameEnd===false){
         //determina que el juego se comenzó a jugar
         start = true;
         //oculta el mensaje (parrafo) del jugador que comienza
@@ -224,6 +234,8 @@ function onMouseDown(e){
         //guarda el numero de jugador del turno actual del jugador
         newTurn = clickPiece.getPlayer();
         lastClickedPiece = clickPiece;
+    } else{
+        start = false;
     }
     drawPiece();
     //board.draw();
@@ -232,7 +244,7 @@ function onMouseDown(e){
 
 function onMouseMove(e){
     board.draw();
-    if(isMouseDown && lastClickedPiece != null && game.playerTurnControl(lastTurn, newTurn)){
+    if(isMouseDown && lastClickedPiece != null && game.playerTurnControl(lastTurn, newTurn) && start=== true){
         lastClickedPiece.setPosition(e.layerX, e.layerY);
         drawPiece();
     }else{
@@ -273,10 +285,9 @@ canvas.addEventListener('mousemove', onMouseMove, false);
 //recargar tablero una vez que la partida se gana y se aprieta en el botón correspondiente
 
 document.getElementById("btnLoadCanvas").addEventListener("click",function(){
-    console.log(lastTurn);
-    console.log(newTurn);
     viewControl.changeStartingPlayerParagraph(pStartPlayer, newTurn);
     start = false;
+    gameEnd= false;
     loadBoardAndPieces();
 });
 //cambia los colores de la fichas del jugador 1

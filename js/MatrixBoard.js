@@ -50,7 +50,10 @@ class MatrixBoard extends Board {
             }
         }
         //si no encuentra una celda libre retorna null.
-        return lastFreeCell;
+        return {
+            lastFreeCell: lastFreeCell,
+            posEnArreglo : i
+        };
     }
     //filtra las celdas para quedarme con las de una columna en especifico
     filterCells(column){

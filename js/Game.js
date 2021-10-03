@@ -1,23 +1,21 @@
 class Game {
-    constructor(matrixBoard){ //agregar atributo dimension y pointWinner, la dimension la necesitamos para recorrer lamatriz y los puntos para saber con cuantos puntos se gana
+    constructor(matrixBoard) { //agregar atributo dimension y pointWinner, la dimension la necesitamos para recorrer lamatriz y los puntos para saber con cuantos puntos se gana
         this.board = matrixBoard;
-        this.contPieceWinner = 1;
     }
 
-
-    playerTurnControl(lastTurn, newTurn){
+    playerTurnControl(lastTurn, newTurn) {
         return lastTurn != newTurn;
     }
 
-    changeTurn(lastTurn){
-        if(lastTurn == 1){
+    changeTurn(lastTurn) {
+        if (lastTurn == 1) {
             return 2;//newTurn
-        }else{
+        } else {
             return 1;//newTurn
         }
     }
 
-    getBoard(){
+    getBoard() {
         return this.board;
     }
 
@@ -62,147 +60,145 @@ class Game {
         }
     }*/
 
-    searchWinner(){
-        let findWinner = this.searchPiecesInLinePlayer();
-        //let winnerPlayer = findWinner.player;
-        /*if(findWinner.winner){
-            return findWinner;
-        }else{
+    searchWinner(column, row, posCelda) {
+
+        if(this.searchByColumn().winner){ // hay que agregar el parametro que sea e numero de columna
+            return this.searchByColumn().player;
+        }else if (this.searchPiecesByRow(row).winner){
+            return this.searchPiecesByRow(row).player;
+        }else if (this.searchDiagonal(posCelda).winner){
+            return this.searchDiagonal(posCelda).player;
+        }
+        else {
             return null;
-        }*/
-        return findWinner;
+        }
     }
 
-    searchPiecesInLinePlayer(){
+    searchPiecesInLinePlayer() {
         return this.searchVertical();
         //console.log("entro a la fx larga");
         //{winner: winner, player: player}
-       /* if(this.searchRight(0).winner){
-            return this.searchRight();
-        }*else if (this.searchLeft(player)){
-            return player;
-        }else if (this.searchDown(player)){
-            return player;
-        }else if (searchUp(player)){
-            return player;
-        }else if(searchUpLeft(player)){
-            return player;
-        }else if (searchUpRight(player)){
-            return player;
-        }else if (searchDownLeft(player)){
-            return player;
-        }else if (searchDownRight(player)){
-            return player;
-        }else{
-            return null;
-        }*/
+        /* if(this.searchRight(0).winner){
+             return this.searchRight();
+         }else if (this.searchLeft(player)){
+             return player;
+         }else if (this.searchDown(player)){
+             return player;
+         }else if (searchUp(player)){
+             return player;
+         }else if(searchUpLeft(player)){
+             return player;
+         }else if (searchUpRight(player)){
+             return player;
+         }else if (searchDownLeft(player)){
+             return player;
+         }else if (searchDownRight(player)){
+             return player;
+         }else{
+             return null;
+         }*/
     }//[1,1  1,2  1,3     2,1 2,2 2,3]
 
-    winnerInColumn(i){
+    searchByColumn() {
+        let i = 0;
+        let winnerInRow = { winner: false, player: null };
+        let cantFila = this.board.getCantY();
+        let cantColumn = this.board.getCantX() - 1;
+        while (!winnerInRow.winner && i < this.board.getCells().length - cantColumn) {
+            winnerInRow = this.searchPiecesByColumn(i);
+            i += cantFila;
+        }
+        return winnerInRow;
+    }
+
+    searchPiecesByColumn(i) {
         let winner = false;
         let player, playerNexPiece;
         let cells = this.board.getCells();
         let contPiece = 1;
-        let cantFila = this.board.getCantY()-1;
-        for(let ix = i; ix<i+cantFila; ix++){
-            if(contPiece < 4){
+        let cantFila = this.board.getCantY() - 1;
+        for (let ix = i; ix < i + cantFila; ix++) {
+            if (contPiece < 4) {
                 let piece = cells[ix].getPiece();
-                let nexPiece = cells[ix+1].getPiece();
-                if(piece != null && nexPiece != null){
+                let nexPiece = cells[ix + 1].getPiece();
+                if (piece != null && nexPiece != null) {
                     player = piece.getPlayer();
                     playerNexPiece = nexPiece.getPlayer();
-                    if(player == playerNexPiece){
+                    if (player == playerNexPiece) {
                         contPiece++;
-                    }else{
-                        if(contPiece >1){
+                    } else {
+                        if (contPiece > 1) {
                             contPiece = 1;
                         }
                         player = -1;
                     }
-                }else{
+                } else {
                     player = null;
                 }
             }
         }
-        if(contPiece >= 4){
+        if (contPiece >= 4) {
             //console.log("columna evaluada: "+i);
             winner = true;
-        }else{
+        } else {
             player = null;
         }
-        return {winner: winner, player: player};
+        return { winner: winner, player: player };
     }
-    searchVertical(){
-        let i = 0;
-        let winnerInRow = {winner: false, player: null};
-        let cantFila = this.board.getCantY();
-        let cantColumn = this.board.getCantX()-1;
-        while(!winnerInRow.winner && i <this.board.getCells().length-cantColumn){
-            winnerInRow = this.winnerInColumn(i);
-            i+=cantFila;
-        }
-        return winnerInRow;
-    }
-/*
-    searchPiecesInLinePlayer(player, i, iCopy){
-        //console.log("entro a la fx larga");
-        if(this.searchRight(player, i,iCopy)){
-            return player;
-        }/**else if (this.searchLeft(player)){
-            return player;
-        }else if (this.searchDown(player)){
-            return player;
-        }else if (searchUp(player)){
-            return player;
-        }else if(searchUpLeft(player)){
-            return player;
-        }else if (searchUpRight(player)){
-            return player;
-        }else if (searchDownLeft(player)){
-            return player;
-        }else if (searchDownRight(player)){
-            return player;
-        }else{
-            return null;
-        }
-    }//[1,1  1,2  1,3     2,1 2,2 2,3]
 
-    searchRight(player, i, iCopy){
-        let index = i;
-        let winner = false;
+    searchPiecesByRow(row) {
         let cells = this.board.getCells();
-        //let columns = this.board.getCantX();
-        //let col= cell.getNroColumn();
-        //let row= cell.getNroRow();
-        //let winner = searchRight();
-        //console.log(row);
-        index+=6;
-        let piece = cells[index].getPiece();
-        console.log("siguiente celda");
-        console.log(cells[index]);
-        if( piece != null){
-            winner = piece.getPlayer() == player;
-        }else{
-            winner = false;
-        }
-        //let elemento = this.board.getCellByPosition(col+1, row);
-        //console.log(elemento);
-        if(winner && index <= iCopy){
-            searchRight(player, index, iCopy);
-        }
-        //}
-        return winner;
-        //for(let i = a; i< column-cell.getNroColumn(); i++){
-            if(this.searchRight(player, a, cell)<4 && a<=column-cells.getNroColumn()){
-                if(cells[a].getPiece().getPlayer() === player){
-                    //searchRight(player, i, cell);
-                    contPieceWinner++;
-                    console.log(cell, )
-                }else{
-                    a++;
-                    this.searchRight(player, a, cell, contPieces);
+        let cont = 1;
+        let player;
+
+        for (let i = row-1; i < row * this.board.getCantX() - 1; i += this.board.getCantX()) {
+            if(cont<4){
+
+                let piece = cells[i].getPiece();
+                let p1 = cells[i + this.board.getCantY()].getPiece();
+                
+                if (piece != null && p1 != null) {
+                    player = piece.getPlayer();
+                    let pl1 = p1.getPlayer();
+                    
+                    if (player === pl1) {
+                        cont++;
+                    } else {
+                        cont = 1
+                        player=null;
+                    }
                 }
             }
-        //}
-    }*/
+        }
+            if(cont >=4){
+                return {
+                    winner: true,
+                    player: player
+                }
+            }else{
+                return {
+                winner: false,
+                player: player
+            }
+        }
+
+    }
+    
+    searchDiagonal(posCelda){
+        let cells= this.board.getCells();
+
+        //búsqueda hacia arriba
+        for (let i = posCelda; i <= posCelda*4 ; i++) {
+            const element = array[i];
+            
+        }
+        
+        //busqueda hacia abajo ?
+        for (let i = posCelda; i < posCelda*4; i++) {
+            const element = array[i];
+            
+        }
+        
+    }
+    
 }
