@@ -5,60 +5,116 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/inputRadio.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <form id="formColorPlayer1">
-        <p>color de fichas del jugador 1:</p>
-        <div>
-          <input type="radio" id="blue" name="color" value="blue" >
-          <label for="blue">blue</label>
-          <input type="radio" id="green"  name="color" value="green"checked>
-          <label for="green">green</label>
-          <input type="radio" id="yelow"  name="color" value="yellow">
-          <label for="yelow">yellow</label>
-          <input type="radio" id="red"  name="color" value="red">
-          <label for="red">red</label>
+  <header class="header">
+    <!--<h1>Cuatro en Linea</h1>-->
+    <img src="img/heder.jpg" alt="">
+  </header>
+  <div class="div_contenedor">
+    <div class="div_color_player">
+      <form class="form_Color_Player1" id="formColorPlayer1">
+        <p class="p p_width">color de fichas del jugador 1</p>
+        <div class="div_input">
+          <label class="container">
+            <input type="radio" name="radio" value="blue">
+            <!--poner una imagen de la ficha y sacar span-->
+            <span class="checkmark blue"></span>
+          </label>
+          <label class="container">
+            <input type="radio" name="radio" value="green" checked>
+            <!--poner una imagen de la ficha y sacar span-->
+            <span class="checkmark green"></span>
+          </label>
+          <label class="container">
+            <input type="radio" name="radio" value="yellow">
+            <!--poner una imagen de la ficha y sacar span-->
+            <span class="checkmark yellow"></span>
+          </label>
+          <label class="container">
+            <input type="radio" name="radio" value="red">
+            <!--poner una imagen de la ficha y sacar span-->
+            <span class="checkmark red"></span>
+          </label>
         </div>
-    </form>
-    <form id="formColorPlayer2">
-        <p>color de fichas del jugador 2:</p>
-        <div>
-          <input type="radio" id="blue" name="color" value="blue" checked>
-          <label for="blue">blue</label>
-          <input type="radio" id="green"  name="color" value="green" >
-          <label for="green">green</label>
-          <input type="radio" id="yelow"  name="color" value="yellow">
-          <label for="yelow">yellow</label>
-          <input type="radio" id="red"  name="color" value="red">
-          <label for="red">red</label>
-        </div>
-    </form>
-    <p class="pColor" id="pColor"></p><!--párrafo para mostrar mensaje de que el color ya fue elegido-->
-    <form id="dimensionBoard">
-        <p>Dimensión del tablero:</p>
-        <div>
-          <input type="radio" id="dimension4" name="dimensionBoard" value="4" >
-          <label for="dimension4">4</label>
-          <input type="radio" id="dimension6"  name="dimensionBoard" value="6" checked>
-          <label for="dimension6">6</label>
-          <input type="radio" id="dimension8"  name="dimensionBoard" value="8">
-          <label for="dimension8">8</label>
-        </div>
-    </form>
-    <p class="pStartPlayer" id="pStartPlayer"></p><!--párrafo para mostrar que jugador comienza el juego-->
-    <canvas class="canvas" id="canvas"></canvas>
-    <div class="hidenwinner" id="winner">
+      </form>
+      <form class="form_Color_Player2" id="formColorPlayer2">
+          <p class="p p_width">color de fichas del jugador 2</p>
+          <div class="div_input">
+            <label class="container">
+              <input type="radio" name="radio" value="blue" checked>
+              <!--poner una imagen de la ficha y sacar span-->
+              <span class="checkmark blue"></span>
+            </label>
+            <label class="container">
+              <input type="radio" name="radio" value="green">
+              <!--poner una imagen de la ficha y sacar span-->
+              <span class="checkmark green"></span>
+            </label>
+            <label class="container">
+              <input type="radio" name="radio" value="yellow">
+              <!--poner una imagen de la ficha y sacar span-->
+              <span class="checkmark yellow"></span>
+            </label>
+            <label class="container">
+              <input type="radio" name="radio" value="red">
+              <!--poner una imagen de la ficha y sacar span-->
+              <span class="checkmark red"></span>
+            </label>
+          </div>
+      </form>
+    </div>
+    <div class="div_pColor">
+      <p class="pColor" id="pColor"></p><!--párrafo para mostrar mensaje de que el color ya fue elegido-->
+    </div>
+    <div>
+      <div class="div_dimension">
+        <form class="form_dimension" id="dimensionBoard">
+          <p class="p">Dimensión del tablero</p>
+          <div class="div_input div_input_dimension">
+            <div class="div_circulo">
+              <input class="hiden" type="radio" id="dimension4" name="dimensionBoard" value="4" >
+              <label for="dimension4">4</label>
+            </div>
+            <div class="div_circulo">
+              <input class="hiden" type="radio" id="dimension6"  name="dimensionBoard" value="6" checked>
+              <label for="dimension6">6</label>
+            </div>
+            <div class="div_circulo">
+              <input class="hiden" type="radio" id="dimension8"  name="dimensionBoard" value="8">
+              <label for="dimension8">8</label>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div>
+      <div class="div_start_player">
+        <p class="pStartPlayer" id="pStartPlayer"></p><!--párrafo para mostrar que jugador comienza el juego-->
+      </div>
+    </div>
+    <div>
+      <canvas class="canvas" id="canvas"></canvas>
+    </div>
+    <div class="div_winner hiden" id="winner">
         <h1 id="winnerPlayer"></h1>
         <button id="btnLoadCanvas">jugar de nuevo</button>
     </div>
-    <script src="js/Piece.js"></script>
-    <script src="js/Board.js"></script>
-    <script src="js/FrontBoard.js"></script>
-    <script src="js/MatrixBoard.js"></script>
-    <script src="js/Cell.js"></script>
-    <script src="js/Game.js"></script>
-    <script src="js/ViewControl.js"></script>
-    <script src="js/main.js"></script>
+  </div>
+  <footer class="footer">
+    <!--<p>testeado en Google Chrome</p>
+    <p>developed by Caseres Marina & Ferrante Stefania</p>-->
+    <img src="img/footer.jpg" alt="">
+  </footer>
+  <script src="js/Piece.js"></script>
+  <script src="js/Board.js"></script>
+  <script src="js/FrontBoard.js"></script>
+  <script src="js/MatrixBoard.js"></script>
+  <script src="js/Cell.js"></script>
+  <script src="js/Game.js"></script>
+  <script src="js/ViewControl.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>

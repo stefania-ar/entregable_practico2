@@ -1,0 +1,57 @@
+/*inputs radio*/
+.container {
+    /**/position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    margin: auto;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  /*Ocultar el botón de opción predeterminado del navegador*/
+  .container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  /* Crear un botón de opción personalizado */
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+  }
+
+  .red{
+    background-color: red;
+  }
+
+  .blue{
+    background-color: blue;
+  }
+
+  .green{
+    background-color: green;
+  }
+
+  .yellow{
+    background-color: yellow;
+  }
+
+  /*Al pasar el mouse, agregue un color de fondo gris */
+  .container:hover input ~ .checkmark {
+    background-color: #ccc;
+  }
+
+  /* Cuando el botón de radio esté marcado, hace cambio de la opacidad */
+  .container input:checked ~ .checkmark {
+    /*background-color: #b3b3b3;*/
+    opacity: 60%;
+  }
+
+  
