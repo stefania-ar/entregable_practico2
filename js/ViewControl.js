@@ -2,8 +2,10 @@
 class ViewControl{
 
     viewWinner(div,canvas){
-        div.className = "show";
-        canvas.className = "hiden";
+        div.classList.remove("hiden");
+        div.classList.add("show");
+        div.classList.remove("show");
+        canvas.classList.add("hiden");
     }
 
     hidenWinner(div, canvas){
@@ -12,12 +14,12 @@ class ViewControl{
     }
 
     hidenParagraph(p){
-        //classList.remove("");
-        p.className = "hiden";
+        p.classList.remove("show");
+        p.classList.add("hiden");
     }
-    showParagraph(p){
-        //classList.remove("");
-        p.className = "show";
+    showParagraph(p){p
+        p.classList.remove("hiden");
+        p.classList.add("show");
     }
 
     /*loadBoard(){

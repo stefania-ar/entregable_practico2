@@ -37,14 +37,31 @@ class MatrixBoard extends Board {
 
     //retorna la ultima celda libre
     lastFreeCell(column){
+        /** 
         let lastFreeCell;
-        let cells = this.filterCells(column);
+        //let cells = this.filterCells(column);
         let lastFind = false;
         let i = this.cantY-1;
         while(!lastFind && i>=0){
             if(cells[i].getPiece() == null){
                 lastFreeCell = cells[i];
                 lastFind = true;
+            }else{
+                i--;
+            }
+        }*/
+        let lastFreeCell;
+        //let cells = this.filterCells(column);
+        let lastFind = false;
+        let i = this.cells.length-1;
+        while(!lastFind && i>=0){
+            if(this.cells[i].getNroColumn() == column){
+                if(this.cells[i].getPiece() == null){
+                    lastFreeCell = this.cells[i];
+                    lastFind = true;
+                }else{
+                    i--;
+                }
             }else{
                 i--;
             }
@@ -56,7 +73,7 @@ class MatrixBoard extends Board {
         };
     }
     //filtra las celdas para quedarme con las de una columna en especifico
-    filterCells(column){
+    /*filterCells(column){
         let arrayFilterCells = [];
         let retunrAllCells = false;
         let cont = this.cantY;
@@ -72,7 +89,7 @@ class MatrixBoard extends Board {
             i++;
         }
         return arrayFilterCells;
-    }
+    }*/
     //pregunta si la pieza está dentro del rango del tablero
     isPieceWithinWidth(x) {
         return (x > this.PosX && x < this.PosX + this.width);

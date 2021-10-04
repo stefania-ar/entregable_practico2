@@ -74,31 +74,6 @@ class Game {
         }
     }
 
-    searchPiecesInLinePlayer() {
-        return this.searchVertical();
-        //console.log("entro a la fx larga");
-        //{winner: winner, player: player}
-        /* if(this.searchRight(0).winner){
-             return this.searchRight();
-         }else if (this.searchLeft(player)){
-             return player;
-         }else if (this.searchDown(player)){
-             return player;
-         }else if (searchUp(player)){
-             return player;
-         }else if(searchUpLeft(player)){
-             return player;
-         }else if (searchUpRight(player)){
-             return player;
-         }else if (searchDownLeft(player)){
-             return player;
-         }else if (searchDownRight(player)){
-             return player;
-         }else{
-             return null;
-         }*/
-    }//[1,1  1,2  1,3     2,1 2,2 2,3]
-
     searchByColumn() {
         let i = 0;
         let winnerInRow = { winner: false, player: null };
@@ -156,11 +131,11 @@ class Game {
 
                 let piece = cells[i].getPiece();
                 let p1 = cells[i + this.board.getCantY()].getPiece();
-                
+
                 if (piece != null && p1 != null) {
                     player = piece.getPlayer();
                     let pl1 = p1.getPlayer();
-                    
+
                     if (player === pl1) {
                         cont++;
                     } else {
@@ -183,22 +158,107 @@ class Game {
         }
 
     }
-    
-    searchDiagonal(posCelda){
-        let cells= this.board.getCells();
 
-        //búsqueda hacia arriba
-        for (let i = posCelda; i <= posCelda*4 ; i++) {
-            const element = array[i];
-            
+    searchDiagonal(posCelda){
+        let player = this.board.getCells()[posCelda].getPiece().getPlayer();
+        //let p1 = this.searchDiagonalUpRight(posCelda);
+        //let p2 = this.searchDiagonalDownLeft(posCelda)
+        if((this.searchDiagonalUpRight(posCelda) + this.searchDiagonalDownLeft(posCelda)+1) == 4){
+            return {winner:true, player:player};
+        /*}else if(this.searchDiagonalUpLeft(posCelda) + this.searchDiagonalDowRight(posCelda)+1 == 4){
+            return {winner:true, player:player}*/
+        }else{
+            return {winner:false, player:null};
         }
-        
-        //busqueda hacia abajo ?
-        for (let i = posCelda; i < posCelda*4; i++) {
-            const element = array[i];
-            
-        }
-        
+        //let nextCell = this.nextCell(column, row, posCelda);
+
     }
-    
+
+    searchDiagonalDownLeft(posCelda){
+        let equalsPlayer = true;
+        let i = posCelda;
+        let cells= this.board.getCells();
+        let contPiece = 0;
+        let newCell, nextCell, nextPiece, player, nextPlayer;
+        player = cells[posCelda].getPiece().getPlayer();
+
+        while(equalsPlayer && i > 0){
+            newCell = cells[i];
+            if(i-(this.board.getCantX())> 0){
+                nextCell = cells[i-(this.board.getCantX()-1)];
+                if(this.trueCellDown(newCell, nextCell)){
+                    nextPiece = nextCell.getPiece();
+                    if(nextPiece != null){
+                        nextPlayer = nextPiece.getPlayer();
+                        if(player == nextPlayer){
+                            contPiece++;
+                        }else{
+                            equalsPlayer = false;
+                        }
+                    }else{
+                        equalsPlayer = false;
+                    }
+                }else{
+                    equalsPlayer = false;
+                }
+            }else{
+                equalsPlayer = false;
+            }
+            i -= (this.board.getCantX()-1);
+        }
+        return contPiece;
+    }
+
+    searchDiagonalUpRight(posCelda){
+        let equalsPlayer = true;
+        let i = posCelda;
+        let cells= this.board.getCells();
+        let contPiece = 0;
+        let newCell, nextCell, nextPiece, player, nextPlayer;
+        player = cells[posCelda].getPiece().getPlayer();
+
+        while(equalsPlayer && i <((this.board.getCantX()-1)*3)){
+            newCell = cells[i];
+            if(i< cells.length){
+                nextCell = cells[i+=(this.board.getCantX()-1)];
+                if(this.trueCell(newCell, nextCell)){
+                    nextPiece = nextCell.getPiece();
+                    if(nextPiece != null){
+                        nextPlayer = nextPiece.getPlayer();
+                        if(player == nextPlayer){
+                            contPiece++;
+                        }else{
+                            equalsPlayer = false;
+                        }
+                    }else{
+                        equalsPlayer = false;
+                    }
+                }else{
+                    equalsPlayer = false;
+                }
+            }else{
+                equalsPlayer = false;
+            }
+            i += (this.board.getCantX()-1);
+        }
+        return contPiece;
+    }
+
+    trueCell(newCell, nextCell){
+        let newRow = newCell.getNroColumn();
+        let newColumn = newCell.getNroRow();
+        let nextRow = nextCell.getNroColumn();
+        let nextColumn = nextCell.getNroRow();
+        return nextRow < newRow  && nextColumn > newColumn;
+    }
+
+    trueCellDown(newCell, nextCell){
+        let newRow = newCell.getNroColumn();
+        let newColumn = newCell.getNroRow();
+        let nextRow = nextCell.getNroColumn();
+        let nextColumn = nextCell.getNroRow();
+        return nextRow > newRow  && nextColumn < newColumn;
+    }
+
+
 }

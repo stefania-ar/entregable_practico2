@@ -196,7 +196,7 @@ function onMouseUp(e){
             //console.log(matrixBoard.getCells());
             //let winner = game.searchWinner();
             let winner = game.searchWinner(cell.getNroColumn(), cell.getNroRow(), posCelda);
-            
+
             //console.log(winner.winner);
             //console.log(winner.player);
             if(winner != null){
@@ -221,7 +221,6 @@ function onMouseDown(e){
     if(lastClickedPiece != null && gameEnd===false){
         if(lastClickedPiece.getInCell() && gameEnd===false){
             lastTurn = lastClickedPiece.getPlayer();
-            console.log(lastTurn);
         }
         lastClickedPiece = null;
     }

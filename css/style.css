@@ -12,6 +12,10 @@ footer{
     height: 70px;
 }
 
+img{
+    width: 1356px;
+}
+
 .show{
     display: block;
 }
@@ -32,6 +36,14 @@ footer{
 .div_input{
     width: auto;
     margin-top: 1%;
+}
+
+.div_circulo{
+    text-align: center;
+}
+
+.pColor{
+    background-color: blue;
 }
 
 .div_input_dimension{
