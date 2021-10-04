@@ -161,9 +161,7 @@ class Game {
 
     searchDiagonal(posCelda){
         let player = this.board.getCells()[posCelda].getPiece().getPlayer();
-        //let p1 = this.searchDiagonalUpRight(posCelda);
-        //let p2 = this.searchDiagonalDownLeft(posCelda)
-        if((this.searchDiagonalUpRight(posCelda) + this.searchDiagonalDownLeft(posCelda)+1) == 4){
+        if((this.searchDiagonalUpRight(posCelda) + this.searchDiagonalDownLeft(posCelda)) > 2){//mayor a dos porque no lo toma a dos, apartir del 3 más la ficha en la que estoy hace 4 fichas;
             return {winner:true, player:player};
         /*}else if(this.searchDiagonalUpLeft(posCelda) + this.searchDiagonalDowRight(posCelda)+1 == 4){
             return {winner:true, player:player}*/
@@ -216,12 +214,11 @@ class Game {
         let contPiece = 0;
         let newCell, nextCell, nextPiece, player, nextPlayer;
         player = cells[posCelda].getPiece().getPlayer();
-
-        while(equalsPlayer && i <((this.board.getCantX()-1)*3)){
+        while(equalsPlayer && i <=posCelda+((this.board.getCantX()-1)*3) && i<cells.length){
             newCell = cells[i];
-            if(i< cells.length){
-                nextCell = cells[i+=(this.board.getCantX()-1)];
-                if(this.trueCell(newCell, nextCell)){
+            nextCell = cells[i+(this.board.getCantX()-1)];
+            if(nextCell != null){
+                if(this.trueCellUp(newCell, nextCell)){
                     nextPiece = nextCell.getPiece();
                     if(nextPiece != null){
                         nextPlayer = nextPiece.getPlayer();
@@ -244,19 +241,19 @@ class Game {
         return contPiece;
     }
 
-    trueCell(newCell, nextCell){
-        let newRow = newCell.getNroColumn();
-        let newColumn = newCell.getNroRow();
-        let nextRow = nextCell.getNroColumn();
-        let nextColumn = nextCell.getNroRow();
+    trueCellUp(newCell, nextCell){
+        let newRow = newCell.getNroRow();
+        let newColumn = newCell.getNroColumn();
+        let nextRow = nextCell.getNroRow();
+        let nextColumn = nextCell.getNroColumn();
         return nextRow < newRow  && nextColumn > newColumn;
     }
 
     trueCellDown(newCell, nextCell){
-        let newRow = newCell.getNroColumn();
-        let newColumn = newCell.getNroRow();
-        let nextRow = nextCell.getNroColumn();
-        let nextColumn = nextCell.getNroRow();
+        let newRow = newCell.getNroRow();
+        let newColumn = newCell.getNroColumn();
+        let nextRow = nextCell.getNroRow();
+        let nextColumn = nextCell.getNroColumn();
         return nextRow > newRow  && nextColumn < newColumn;
     }
 
