@@ -16,6 +16,10 @@ class Piece{
         return this.fill;
     }
 
+    setImg(source){
+        this.image.src= source;
+    }
+
     draw(){
         ctx.beginPath();
         //this.ctx.strokeStyle = "black";
@@ -23,7 +27,7 @@ class Piece{
         this.ctx.fillStyle = this.fill;
         this.ctx.fill();
         this.ctx.stroke();
-        this.ctx.drawImage(image, this.x-this.radio, this.y-this.radio, this.piecePixel, this.piecePixel);
+        this.ctx.drawImage(this.image, this.x-this.radio, this.y-this.radio, this.piecePixel, this.piecePixel);
     }
 
     isPointInside(x, y){

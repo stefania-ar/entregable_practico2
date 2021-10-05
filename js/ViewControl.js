@@ -56,4 +56,16 @@ class ViewControl{
         this.showParagraph(p);
     }
 
+    changePieceImage(source, player, pieces){
+        if(player == 1){
+            for(let i = 0; i<pieces.length/2; i++){
+                pieces[i].setImg(source);
+            }
+        }else{
+            for(let i = pieces.length/2; i<pieces.length ;i++){
+                pieces[i].setImg(source);
+            }
+        }
+    }
+
 }

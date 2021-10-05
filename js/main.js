@@ -66,14 +66,23 @@ board.draw();
 //se dibuja la parte frontal del tablero
 frontBoard.draw();
 //imagen para las piezas
-image = new Image(); //iniciar ruta
-image.src="img/piece.png";
+image1 = new Image(); //iniciar ruta
+image1.src="img/piece.png";
+
+image2= new Image();
+image2.src="img/piece2.png";
 //imagen para la parte frontal del tablero
 imageBoard = new Image(); //iniciar ruta
 imageBoard.src="img/ventana.png";
 
-image.onload = function(){
-    initPieces();
+
+
+image1.onload = function(){
+    initPieces(1);
+}
+
+image2.onload = function(){
+    initPieces(2);
 }
 
 imageBoard.onload = function(){
@@ -88,17 +97,20 @@ function extractDimension(form){
     }
 }
 
-function initPieces(){
+function initPieces(player){
+    pieces= [];
     let cantPiece = cantPieceByPlayer;
-    let player = 1;
     let y = 50;
     let x = piecePixel;
     let marginY = (radio*2.3);
-    addPiecePlayer(image, player, x, y, fill1, marginY, cantPiece, radio);
-    player = 2;
-    x = width - x;
-    addPiecePlayer(image, player, x, y, fill2, marginY, cantPiece, radio);
+    if(player === 1){// hacer que vacíe las piezas que son del primer player, y que se agreguen después
+        addPiecePlayer(image1, player, x, y, fill1, marginY, cantPiece, radio);
+    }else{
+        x = width - x;
+        addPiecePlayer(image2, player, x, y, fill2, marginY, cantPiece, radio);
+    }
     frontBoard.setImage(imageBoard);
+    frontBoard.draw();
 }
 
 function addPiecePlayer(image, player, x, y, fill, marginY, cantPiece, radio){
@@ -175,9 +187,6 @@ function onMouseUp(e){
     if(clickPiece != null){
         let x= clickPiece.getX();
         let y= clickPiece.getY();
-        board.draw();
-        drawPiece();
-        frontBoard.draw();
         if(matrixBoard.whichColumn(x) > 0){
             let cell = matrixBoard.lastFreeCell(matrixBoard.whichColumn(x)).lastFreeCell;
             let posCelda= matrixBoard.lastFreeCell(matrixBoard.whichColumn(x)).posEnArreglo;
@@ -202,6 +211,9 @@ function onMouseUp(e){
                 }, 3000);
             }
         }
+        board.draw();
+        drawPiece();
+        frontBoard.draw();
     }
     
 }
@@ -332,4 +344,36 @@ document.getElementById("dimensionBoard").addEventListener("change",function(e){
         initPieces();
         frontBoard.draw();
     }
+
+    
 });
+
+let imagenes = document.getElementsByClassName("pieza1");
+let array1= Array.from(imagenes);
+
+console.log(imagenes);
+
+    array1.forEach(img => {
+        img.onload=function(){
+
+            img.addEventListener("click", function () {
+                let source= img.getAttribute("src"); 
+                console.log(source);
+                if(!start){
+                    console.log();
+                    image1.src= source;
+                    //viewControl.changePieceImage(source, 1, pieces);
+                }
+            });
+
+            /*clearCanvas();
+            board.draw();
+            drawPiece();
+            frontBoard.draw();
+            console.log("hola");*/
+        }
+        
+    });
+
+    
+    
