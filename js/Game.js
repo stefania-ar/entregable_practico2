@@ -161,10 +161,12 @@ class Game {
 
     searchDiagonal(posCelda){
         let player = this.board.getCells()[posCelda].getPiece().getPlayer();
+        let newb= this.searchDiagonalUpLeft(posCelda);
+        let newb2= this.searchDiagonalDownRight(posCelda);
         if((this.searchDiagonalUpRight(posCelda) + this.searchDiagonalDownLeft(posCelda)) > 2){//mayor a dos porque no lo toma a dos, apartir del 3 más la ficha en la que estoy hace 4 fichas;
             return {winner:true, player:player};
-        /*}else if(this.searchDiagonalUpLeft(posCelda) + this.searchDiagonalDowRight(posCelda)+1 == 4){
-            return {winner:true, player:player}*/
+        }else if(this.searchDiagonalUpLeft(posCelda) + this.searchDiagonalDownRight(posCelda)>2){
+            return {winner:true, player:player}
         }else{
             return {winner:false, player:null};
         }
@@ -257,5 +259,75 @@ class Game {
         return nextRow > newRow  && nextColumn < newColumn;
     }
 
+    searchDiagonalDownRight(posCelda){
+        let equalsPlayer = true;
+        let i = posCelda;
+        let cells= this.board.getCells();
+        let contPiece = 0;
+        let nextCell, nextPiece, player, nextPlayer;
+        player = cells[posCelda].getPiece().getPlayer();
+
+        while(equalsPlayer && i < cells.length){
+            //newCell = cells[i];
+
+            if(i+(this.board.getCantX())+1 < cells.length){
+
+                nextCell = cells[i+(this.board.getCantX()+1)];
+                //if(this.trueCellDown(newCell, nextCell)){
+                    nextPiece = nextCell.getPiece();
+                    if(nextPiece != null){
+                        nextPlayer = nextPiece.getPlayer();
+                        if(player == nextPlayer){
+                            contPiece++;
+                        }else{
+                            equalsPlayer = false;
+                        }
+                    }else{
+                        equalsPlayer = false;
+                    }
+                }else{
+                    equalsPlayer =false;
+                }
+            i += (this.board.getCantX()+1);
+        }
+        return contPiece;
+    }
+
+    searchDiagonalUpLeft(posCelda){
+        let equalsPlayer = true;
+        let i = posCelda;
+        let cells= this.board.getCells();
+        let contPiece = 0;
+        let nextCell, nextPiece, player, nextPlayer;
+        player = cells[posCelda].getPiece().getPlayer();
+
+        while(equalsPlayer && i >=posCelda-((this.board.getCantX()-1)*3) && i> 0){
+            
+            if(i-(this.board.getCantX())+1 > 0){
+            nextCell = cells[i-(this.board.getCantX()+1)];
+            
+            if(nextCell != null){
+                //if(this.trueCellUp(newCell, nextCell)){
+                    nextPiece = nextCell.getPiece();
+                    if(nextPiece != null){
+                        nextPlayer = nextPiece.getPlayer();
+                        if(player == nextPlayer){
+                            contPiece++;
+                        }else{
+                            equalsPlayer = false;
+                        }
+                    }else{
+                        equalsPlayer = false;
+                    }
+                }else{
+                    equalsPlayer = false;
+                }
+            }else{
+                equalsPlayer = false;
+            }
+            i -= (this.board.getCantX()+1);
+        }
+        return contPiece;
+    }
 
 }

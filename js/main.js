@@ -186,33 +186,24 @@ function onMouseUp(e){
             //hasta acá tiene que ir la ficha
             xCell= cell.getXStart()+((cell.getXEnd()-cell.getXStart())/2);
             yCell= cell.getYStart()+((cell.getYEnd()-cell.getYStart())/2);
-            //yCell= cell.getYEnd();
-            //clickPiece.setPosition(xCell, yCell);
             rangeMove = (yCell-y)/30;
             xTransition = xCell;
             //yTransition = y;
             transition();
             //acá bloquear que se pueda mover la ficha
-            //console.log(matrixBoard.getCells());
-            //let winner = game.searchWinner();
             let winner = game.searchWinner(cell.getNroColumn(), cell.getNroRow(), posCelda);
 
-            //console.log(winner.winner);
-            //console.log(winner.player);
             if(winner != null){
                 gameEnd= true;
                 setTimeout(function(){
                     viewControl.changeStartingPlayerParagraph(pStartPlayer, lastTurn);
                     h1.innerHTML = "Ganó el jugador "+winner;
                     viewControl.viewWinner(div, canvas);
-                    
-                    console.log(lastTurn+ " en funcion final. "+ newTurn);
-                }, 4000);
+                }, 3000);
             }
         }
     }
-    //let p=matrixBoard.getCellByPosition(6,1);
-    //console.log(p);
+    
 }
 
 function onMouseDown(e){
@@ -237,7 +228,6 @@ function onMouseDown(e){
         start = false;
     }
     drawPiece();
-    //board.draw();
     frontBoard.draw();
 }
 
@@ -289,6 +279,7 @@ document.getElementById("btnLoadCanvas").addEventListener("click",function(){
     gameEnd= false;
     loadBoardAndPieces();
 });
+
 //cambia los colores de la fichas del jugador 1
 document.getElementById("formColorPlayer1").addEventListener("change",function(e){
     if(!start){
@@ -299,12 +290,15 @@ document.getElementById("formColorPlayer1").addEventListener("change",function(e
         }else{
             viewControl.showParagraph(pColor);
             pColor.innerHTML = "El color "+fill1+" ya se encuentra elegido por el otro jugador.";
+            fill1= pieces[1].getFill();
         }
     }
+    board.draw();
+    drawPiece();
+    frontBoard.draw();
 });
 //cambia los colores de la fichas del jugador 2
 document.getElementById("formColorPlayer2").addEventListener("change",function(e){
-    console.log("entra en el dos");
     if(!start){
         viewControl.hidenParagraph(pColor);
         fill2= viewControl.readColor(this);
@@ -313,8 +307,12 @@ document.getElementById("formColorPlayer2").addEventListener("change",function(e
         }else{
             viewControl.showParagraph(pColor);
             pColor.innerHTML = "El color "+fill2+" ya se encuentra elegido por el otro jugador.";
+            fill2= pieces[pieces.length-1].getFill();
         }
     }
+    board.draw();
+    drawPiece();
+    frontBoard.draw();
 });
 //cambiar diensión de tablero
 document.getElementById("dimensionBoard").addEventListener("change",function(e){

@@ -12,6 +12,10 @@ class Piece{
         this.inCell = false;
     }
 
+    getFill(){
+        return this.fill;
+    }
+
     draw(){
         ctx.beginPath();
         //this.ctx.strokeStyle = "black";
