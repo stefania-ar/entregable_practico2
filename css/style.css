@@ -34,7 +34,7 @@ img{
     height: 900px;
 }
 
-.div_color_player{
+.div_herramientas_piece{
     height: 7%;
     text-align: center;
     display: flex;
@@ -106,5 +106,23 @@ img{
 }
 
 .p_width{
-    width: 40%;
+    width: 80%;
+}
+
+.div_div_image_piece{
+    display: flex;
+}
+
+.div_image_piece{
+    margin: auto;
+}
+
+.div_herramientas_player{
+    width: 50%;
+    margin: auto;
+}
+
+.div_herramientas{
+    display: flex;
+    margin-top: 2%;
 }

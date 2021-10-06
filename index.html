@@ -15,72 +15,85 @@
   </header>
   <div class="div_contenedor">
    <div class="show" id="herramientas_de_apariencia">
-    <div class="div_color_player">
-      <form class="form_Color_Player1" id="formColorPlayer1">
-        <p class="p p_width">color de fichas del jugador 1</p>
-        <div class="div_input">
-          <label class="container">
-            <input type="radio" name="radio" value="blue">
-            <!--poner una imagen de la ficha y sacar span-->
-            <span class="checkmark blue"></span>
-          </label>
-          <label class="container">
-            <input type="radio" name="radio" value="green" checked>
-            <!--poner una imagen de la ficha y sacar span-->
-            <span class="checkmark green"></span>
-          </label>
-          <label class="container">
-            <input type="radio" name="radio" value="yellow">
-            <!--poner una imagen de la ficha y sacar span-->
-            <span class="checkmark yellow"></span>
-          </label>
-          <label class="container">
-            <input type="radio" name="radio" value="red">
-            <!--poner una imagen de la ficha y sacar span-->
-            <span class="checkmark red"></span>
-          </label>
-        </div>
-      </form>
-      <form class="form_Color_Player2" id="formColorPlayer2">
-          <p class="p p_width">color de fichas del jugador 2</p>
-          <div class="div_input">
-            <label class="container">
-              <input type="radio" name="radio" value="blue" checked>
-              <!--poner una imagen de la ficha y sacar span-->
-              <span class="checkmark blue"></span>
-            </label>
-            <label class="container">
-              <input type="radio" name="radio" value="green">
-              <!--poner una imagen de la ficha y sacar span-->
-              <span class="checkmark green"></span>
-            </label>
-            <label class="container">
-              <input type="radio" name="radio" value="yellow">
-              <!--poner una imagen de la ficha y sacar span-->
-              <span class="checkmark yellow"></span>
-            </label>
-            <label class="container">
-              <input type="radio" name="radio" value="red">
-              <!--poner una imagen de la ficha y sacar span-->
-              <span class="checkmark red"></span>
-            </label>
+    <div class="div_herramientas_piece">
+      <div class="div_herramientas_player">
+        <p  class="p p_width">Fichas jugador 1</p>
+        <div class="div_herramientas" >
+          <form class="form_Color_Player1" id="formColorPlayer1">
+            <p class="p p_width">color</p>
+            <div class="div_input">
+              <label class="container">
+                <input type="radio" name="radio" value="blue">
+                <!--poner una imagen de la ficha y sacar span-->
+                <span class="checkmark blue"></span>
+              </label>
+              <label class="container">
+                <input type="radio" name="radio" value="green" checked>
+                <!--poner una imagen de la ficha y sacar span-->
+                <span class="checkmark green"></span>
+              </label>
+              <label class="container">
+                <input type="radio" name="radio" value="yellow">
+                <!--poner una imagen de la ficha y sacar span-->
+                <span class="checkmark yellow"></span>
+              </label>
+              <label class="container">
+                <input type="radio" name="radio" value="red">
+                <!--poner una imagen de la ficha y sacar span-->
+                <span class="checkmark red"></span>
+              </label>
+            </div>
+          </form>
+          <div class="div_image_piece">
+            <!---Imagenes de fichas del player 1-->
+            <p class="p p_width">imagen</p>
+            <img src="img/piece.png" alt="" srcset="" class="imagen pieza1"  id="img1">
+            <img src="img/piece2.png" alt="" srcset="" class="imagen pieza1" >
+            <img src="img/piece3.png" alt="" srcset="" class="imagen pieza1" >
           </div>
-      </form>
+        </div>
+      </div>
+      <div class="div_herramientas_player">
+        <p  class="p p_width">Fichas jugador 2</p>
+        <div class="div_herramientas">
+          <form class="form_Color_Player2" id="formColorPlayer2">
+            <p class="p p_width">color</p>
+            <div class="div_input">
+              <label class="container">
+                <input type="radio" name="radio" value="blue" checked>
+                <!--poner una imagen de la ficha y sacar span-->
+                <span class="checkmark blue"></span>
+              </label>
+              <label class="container">
+                <input type="radio" name="radio" value="green">
+                <!--poner una imagen de la ficha y sacar span-->
+                <span class="checkmark green"></span>
+              </label>
+              <label class="container">
+                <input type="radio" name="radio" value="yellow">
+                <!--poner una imagen de la ficha y sacar span-->
+                <span class="checkmark yellow"></span>
+              </label>
+              <label class="container">
+                <input type="radio" name="radio" value="red">
+                <!--poner una imagen de la ficha y sacar span-->
+                <span class="checkmark red"></span>
+              </label>
+            </div>
+        </form>
+        <div class="div_image_piece">
+          <!---Imagenes de fichas del player 2-->
+          <p class="p p_width">imagen</p>
+          <img src="img/piece.png" alt="" srcset="" class="imagen pieza1Player2"  id="img1">
+          <img src="img/piece2.png" alt="" srcset="" class="imagen pieza1Player2" >
+          <img src="img/piece3.png" alt="" srcset="" class="imagen pieza1Player2" >
+        </div>
+        </div>
+      </div>
     </div>
+    <!--<div class="div_div_image_piece">
 
-    <h1>imagenes</h1>
-    <img src="img/piece.png" alt="" srcset="" class="imagen pieza1"  id="img1">
-    <label for="">Imagen 2</label>
-    <img src="img/piece2.png" alt="" srcset="" class="imagen pieza1" >
-    <label for="">Imagen 3</label>
-    <img src="img/piece3.png" alt="" srcset="" class="imagen pieza1" >
-    <!---Imagenes de fichas del player 2-->
-    <h1>imagenes</h1>
-    <img src="img/piece.png" alt="" srcset="" class="imagen pieza1Player2"  id="img1">
-    <label for="">Imagen 2</label>
-    <img src="img/piece2.png" alt="" srcset="" class="imagen pieza1Player2" >
-    <label for="">Imagen 3</label>
-    <img src="img/piece3.png" alt="" srcset="" class="imagen pieza1Player2" >
+    </div>-->
     <div class="div_pColor">
       <p class="pColor" id="pColor"></p><!--párrafo para mostrar mensaje de que el color ya fue elegido-->
     </div>
