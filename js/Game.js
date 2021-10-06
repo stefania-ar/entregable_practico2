@@ -1,6 +1,10 @@
 class Game {
-    constructor(matrixBoard) { //agregar atributo dimension y pointWinner, la dimension la necesitamos para recorrer lamatriz y los puntos para saber con cuantos puntos se gana
+    constructor(matrixBoard, cantPieceWinner) { //agregar atributo dimension y pointWinner, la dimension la necesitamos para recorrer lamatriz y los puntos para saber con cuantos puntos se gana
         this.board = matrixBoard;
+        this.cantPieceWinner = cantPieceWinner;
+    }
+    setCantPieceWinner(cantPieceWinner){
+        this.cantPieceWinner = cantPieceWinner;
     }
 
     playerTurnControl(lastTurn, newTurn) {
@@ -19,49 +23,7 @@ class Game {
         return this.board;
     }
 
-    /*searchWinner(){
-        //console.log("entro a la funcion search winner");
-        let findWinner = false;
-        let i = 0;
-        //si no lo encuentra es null
-        //se va a guardar el numero del player ganador
-        let winnerPlayer;
-        //console.log(this.board.getCells().length);
-        while(!findWinner && i< this.board.getCells().length){
-            console.log("entro al while");
-            let cell = this.board.getCells()[i];
-            
-            if(cell.getPiece() != null){
-                console.log("entro al if");
-                console.log(cell);
-                //int
-                let player = cell.getPiece().getPlayer();
-                console.log("player: "+player);
-                //variable que fija la busqueda en cuatro posiciones a partir de i
-                let iCopy = i+(6*(6-i));
-                //devuelve el numero del ganador
-                //busca que un mismo player tenga cuatro fichas en linea
-                let winner = this.searchPiecesInLinePlayer(player, i, iCopy);
-                if(winner!= null){
-                    findWinner = true;
-                    winnerPlayer = player;
-                    console.log("funciona la derecha");
-                }else{
-                    i+=3;
-                }
-            }else{
-              i++;
-            }
-        }
-        if(findWinner){
-            return winnerPlayer;
-        }else{
-            return -1;
-        }
-    }*/
-
     searchWinner(column, row, posCelda) {
-
         if(this.searchByColumn().winner){ // hay que agregar el parametro que sea e numero de columna
             return this.searchByColumn().player;
         }else if (this.searchPiecesByRow(row).winner){
@@ -93,7 +55,7 @@ class Game {
         let contPiece = 1;
         let cantFila = this.board.getCantY() - 1;
         for (let ix = i; ix < i + cantFila; ix++) {
-            if (contPiece < 4) {
+            if (contPiece < this.cantPieceWinner) {
                 let piece = cells[ix].getPiece();
                 let nexPiece = cells[ix + 1].getPiece();
                 if (piece != null && nexPiece != null) {
@@ -112,7 +74,7 @@ class Game {
                 }
             }
         }
-        if (contPiece >= 4) {
+        if (contPiece >= this.cantPieceWinner) {
             //console.log("columna evaluada: "+i);
             winner = true;
         } else {
@@ -127,7 +89,7 @@ class Game {
         let player;
 
         for (let i = row-1; i < row * this.board.getCantX() - 1; i += this.board.getCantX()) {
-            if(cont<4){
+            if(cont<this.cantPieceWinner){
 
                 let piece = cells[i].getPiece();
                 let p1 = cells[i + this.board.getCantY()].getPiece();
@@ -145,7 +107,7 @@ class Game {
                 }
             }
         }
-            if(cont >=4){
+            if(cont >=this.cantPieceWinner){
                 return {
                     winner: true,
                     player: player
@@ -163,9 +125,9 @@ class Game {
         let player = this.board.getCells()[posCelda].getPiece().getPlayer();
         let newb= this.searchDiagonalUpLeft(posCelda);
         let newb2= this.searchDiagonalDownRight(posCelda);
-        if((this.searchDiagonalUpRight(posCelda) + this.searchDiagonalDownLeft(posCelda)) > 2){//mayor a dos porque no lo toma a dos, apartir del 3 más la ficha en la que estoy hace 4 fichas;
+        if((this.searchDiagonalUpRight(posCelda) + this.searchDiagonalDownLeft(posCelda)) > this.cantPieceWinner/2){//mayor a dos porque no lo toma a dos, apartir del 3 más la ficha en la que estoy hace 4 fichas;
             return {winner:true, player:player};
-        }else if(this.searchDiagonalUpLeft(posCelda) + this.searchDiagonalDownRight(posCelda)>2){
+        }else if(this.searchDiagonalUpLeft(posCelda) + this.searchDiagonalDownRight(posCelda)>this.cantPieceWinner/2){
             return {winner:true, player:player}
         }else{
             return {winner:false, player:null};
@@ -216,7 +178,7 @@ class Game {
         let contPiece = 0;
         let newCell, nextCell, nextPiece, player, nextPlayer;
         player = cells[posCelda].getPiece().getPlayer();
-        while(equalsPlayer && i <=posCelda+((this.board.getCantX()-1)*3) && i<cells.length){
+        while(equalsPlayer && i <=posCelda+((this.board.getCantX()-1)*this.cantPieceWinner-1) && i<cells.length){
             newCell = cells[i];
             nextCell = cells[i+(this.board.getCantX()-1)];
             if(nextCell != null){
@@ -301,11 +263,11 @@ class Game {
         let nextCell, nextPiece, player, nextPlayer;
         player = cells[posCelda].getPiece().getPlayer();
 
-        while(equalsPlayer && i >=posCelda-((this.board.getCantX()-1)*3) && i> 0){
-            
+        while(equalsPlayer && i >=posCelda-((this.board.getCantX()-1)*this.cantPieceWinner-1) && i> 0){
+
             if(i-(this.board.getCantX())+1 > 0){
             nextCell = cells[i-(this.board.getCantX()+1)];
-            
+
             if(nextCell != null){
                 //if(this.trueCellUp(newCell, nextCell)){
                     nextPiece = nextCell.getPiece();

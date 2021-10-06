@@ -51,9 +51,11 @@ class Piece{
         return (this.getX()> x_ini && this.getX< x_fin) && (this.getY()> y_ini && this.getY< y_fin);
     }
 
-    setPosition(x, y){
-        this.x = x;
-        this.y = y;
+    setPosition(x, y, inCell){
+        if(!inCell){
+            this.x = x;
+            this.y = y;
+        }
     }
 
     getPosition(){

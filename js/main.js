@@ -38,7 +38,7 @@ let frontBoard = new FrontBoard(dimension, dimension, ctx, width, height, pixels
 let matrixBoard = new MatrixBoard(dimension, dimension, ctx, width, height, pixels);
 //se inicia una variable que maneja el comportamiento del juego
 //usado para buscar el ganador
-let game = new Game(matrixBoard);
+let game = new Game(matrixBoard, dimension);
 //esta variable guarda el comportamiento de vista de los distintos elementos del DOM
 let viewControl = new ViewControl();
 //variable que determina si el juego comenzó
@@ -78,11 +78,23 @@ imageBoard.src="img/ventana.png";
 
 
 image1.onload = function(){
-    initPieces(1);
+    if(pieces.length < dimension*dimension){
+        initPieces(1);
+    }
+    //initPieces(2);
+    board.draw();
+    drawPiece();
+    frontBoard.draw();
 }
 
 image2.onload = function(){
-    initPieces(2);
+    //initPieces(1);
+    if(pieces.length < dimension*dimension){
+        initPieces(2);
+    }
+    board.draw();
+    drawPiece();
+    frontBoard.draw();
 }
 
 imageBoard.onload = function(){
@@ -98,12 +110,13 @@ function extractDimension(form){
 }
 
 function initPieces(player){
-    pieces= [];
+    //pieces= [];
     let cantPiece = cantPieceByPlayer;
     let y = 50;
     let x = piecePixel;
     let marginY = (radio*2.3);
     if(player === 1){// hacer que vacíe las piezas que son del primer player, y que se agreguen después
+
         addPiecePlayer(image1, player, x, y, fill1, marginY, cantPiece, radio);
     }else{
         x = width - x;
@@ -184,7 +197,7 @@ function transition(){
 
 function onMouseUp(e){
     isMouseDown = false;
-    if(clickPiece != null){
+    if(clickPiece != null && !clickPiece.getInCell()){
         let x= clickPiece.getX();
         let y= clickPiece.getY();
         if(matrixBoard.whichColumn(x) > 0){
@@ -192,6 +205,7 @@ function onMouseUp(e){
             let posCelda= matrixBoard.lastFreeCell(matrixBoard.whichColumn(x)).posEnArreglo;
             cell.setPiece(clickPiece);
             clickPiece.setInCell(true);
+            //lastClickedPiece.setInCell(true);
             //hasta acá tiene que ir la ficha
             xCell= cell.getXStart()+((cell.getXEnd()-cell.getXStart())/2);
             yCell= cell.getYStart()+((cell.getYEnd()-cell.getYStart())/2);
@@ -215,14 +229,13 @@ function onMouseUp(e){
         drawPiece();
         frontBoard.draw();
     }
-    
 }
 
 function onMouseDown(e){
     board.draw();
     isMouseDown = true;
     if(lastClickedPiece != null && gameEnd===false){
-        if(lastClickedPiece.getInCell() && gameEnd===false){
+        if(gameEnd===false){
             lastTurn = lastClickedPiece.getPlayer();
         }
         lastClickedPiece = null;
@@ -236,9 +249,13 @@ function onMouseDown(e){
         //guarda el numero de jugador del turno actual del jugador
         newTurn = clickPiece.getPlayer();
         lastClickedPiece = clickPiece;
-    } else{
-        start = false;
     }
+    /**
+
+    }
+      else{
+        start = false;
+    }*/
     drawPiece();
     frontBoard.draw();
 }
@@ -246,7 +263,7 @@ function onMouseDown(e){
 function onMouseMove(e){
     board.draw();
     if(isMouseDown && lastClickedPiece != null && game.playerTurnControl(lastTurn, newTurn) && start=== true){
-        lastClickedPiece.setPosition(e.layerX, e.layerY);
+        lastClickedPiece.setPosition(e.layerX, e.layerY, lastClickedPiece.getInCell());
         drawPiece();
     }else{
         drawPiece();
@@ -274,7 +291,8 @@ function loadBoardAndPieces(){
     pieces = [];
     viewControl.hidenWinner(div, canvas);
     matrixBoard.cleanCells();
-    initPieces();
+    initPieces(1);
+    initPieces(2);
     frontBoard.draw();
 }
 //cambia en el DOM el jugador que comienza a jugar.
@@ -284,7 +302,6 @@ canvas.addEventListener('mousedown', onMouseDown, false);
 canvas.addEventListener('mouseup', onMouseUp, false);
 canvas.addEventListener('mousemove', onMouseMove, false);
 //recargar tablero una vez que la partida se gana y se aprieta en el botón correspondiente
-
 document.getElementById("btnLoadCanvas").addEventListener("click",function(){
     viewControl.changeStartingPlayerParagraph(pStartPlayer, newTurn);
     start = false;
@@ -326,54 +343,49 @@ document.getElementById("formColorPlayer2").addEventListener("change",function(e
     drawPiece();
     frontBoard.draw();
 });
-//cambiar diensión de tablero
+//cambiar dimensión de tablero
 document.getElementById("dimensionBoard").addEventListener("change",function(e){
     if(!start){
         //clearCanvas();
         dimension = Number(extractDimension(this));
         cantPieceByPlayer = (dimension*dimension)/2;
-
-        /*board = new Board(dimension, dimension, ctx, width, height);
-        frontBoard = new FrontBoard(dimension, dimension, ctx, width, height);
-        matrixBoard = new MatrixBoard(dimension, dimension, ctx, width, height);*/
+        game.setCantPieceWinner(dimension);
         board.setDimension(dimension);
         frontBoard.setDimension(dimension);
         matrixBoard.setDimension(dimension);
         board.draw();
         pieces = [];
-        initPieces();
+        initPieces(1);
+        initPieces(2);
+        drawPiece();
         frontBoard.draw();
     }
-
-    
 });
 
 let imagenes = document.getElementsByClassName("pieza1");
 let array1= Array.from(imagenes);
 
-console.log(imagenes);
+array1.forEach(img => {
+    img.onload=function(){
+        img.addEventListener("click", function () {
+            let source= img.getAttribute("src");
+            if(!start){
+                image1.src= source;
+            }
+        });
+    }
+});
 
-    array1.forEach(img => {
-        img.onload=function(){
+let imagePlayer2 = document.getElementsByClassName("pieza1Player2");
+let arrayImagePlayer2 = Array.from(imagePlayer2);
 
-            img.addEventListener("click", function () {
-                let source= img.getAttribute("src"); 
-                console.log(source);
-                if(!start){
-                    console.log();
-                    image1.src= source;
-                    //viewControl.changePieceImage(source, 1, pieces);
-                }
-            });
-
-            /*clearCanvas();
-            board.draw();
-            drawPiece();
-            frontBoard.draw();
-            console.log("hola");*/
-        }
-        
-    });
-
-    
-    
+arrayImagePlayer2.forEach(img => {
+    img.onload=function(){
+        img.addEventListener("click", function () {
+            let source= img.getAttribute("src");
+            if(!start){
+                image2.src= source;
+            }
+        });
+    }
+});
