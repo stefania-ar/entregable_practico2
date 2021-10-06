@@ -1,3 +1,7 @@
+//div del DOM que contiene formularios de apariencia
+let divPStartPTurn= document.getElementById("div_pStart_pTurn");
+//div del DOM que contiene formularios de apariencia
+let divHer = document.getElementById("herramientas_de_apariencia");div_pStart_pTurn
 //div del DOM que contiene mensaje del jugador ganador
 let div = document.getElementById("winner");
 //h1 del DOM que mostrará el jugador ganador
@@ -222,6 +226,7 @@ function onMouseUp(e){
                 setTimeout(function(){
                     viewControl.changeParagraphTurn(pTurnPlayer, turn);
                     viewControl.changeStartingPlayerParagraph(pStartPlayer, turn);
+                    viewControl.hiden(divPStartPTurn);
                     h1.innerHTML = "Ganó el jugador "+winner;
                     viewControl.viewWinner(div, canvas);
                 }, 3000);
@@ -245,8 +250,13 @@ function onMouseDown(e){
     if(clickPiece  != null && gameEnd===false){
         //determina que el juego se comenzó a jugar
         start = true;
+        //oculta div con herramientas de apariencia de fichas y tablero
+        viewControl.hiden(divHer);
         //oculta el mensaje (parrafo) del jugador que comienza
-        viewControl.hidenParagraph(pStartPlayer);
+        viewControl.hiden(pStartPlayer);
+        //setea el turno y lo muestra el turno
+        viewControl.changeParagraphTurn(pTurnPlayer, turn);
+        viewControl.show(pTurnPlayer);
         //guarda el numero de jugador del turno actual del jugador
         lastClickedPiece = clickPiece;
     }
@@ -304,20 +314,22 @@ canvas.addEventListener('mousemove', onMouseMove, false);
 //recargar tablero una vez que la partida se gana y se aprieta en el botón correspondiente
 document.getElementById("btnLoadCanvas").addEventListener("click",function(){
     viewControl.changeStartingPlayerParagraph(pStartPlayer, turn);
+    viewControl.show(divPStartPTurn);
     start = false;
     gameEnd= false;
     loadBoardAndPieces();
+    viewControl.show(divHer);
 });
 
 //cambia los colores de la fichas del jugador 1
 document.getElementById("formColorPlayer1").addEventListener("change",function(e){
     if(!start){
-        viewControl.hidenParagraph(pColor);
+        viewControl.hiden(pColor);
         fill1 = viewControl.readColor(this);
         if(fill1 != fill2){
             viewControl.changeColor(fill1, 1,pieces);
         }else{
-            viewControl.showParagraph(pColor);
+            viewControl.show(pColor);
             pColor.innerHTML = "El color "+fill1+" ya se encuentra elegido por el otro jugador.";
             fill1= pieces[1].getFill();
         }
@@ -329,12 +341,12 @@ document.getElementById("formColorPlayer1").addEventListener("change",function(e
 //cambia los colores de la fichas del jugador 2
 document.getElementById("formColorPlayer2").addEventListener("change",function(e){
     if(!start){
-        viewControl.hidenParagraph(pColor);
+        viewControl.hiden(pColor);
         fill2= viewControl.readColor(this);
         if(fill2 != fill1){
             viewControl.changeColor(fill2, 2,pieces);
         }else{
-            viewControl.showParagraph(pColor);
+            viewControl.show(pColor);
             pColor.innerHTML = "El color "+fill2+" ya se encuentra elegido por el otro jugador.";
             fill2= pieces[pieces.length-1].getFill();
         }

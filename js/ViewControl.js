@@ -13,13 +13,13 @@ class ViewControl{
         canvas.className = "show";
     }
 
-    hidenParagraph(p){
-        p.classList.remove("show");
-        p.classList.add("hiden");
+    hiden(element){
+        element.classList.remove("show");
+        element.classList.add("hiden");
     }
-    showParagraph(p){p
-        p.classList.remove("hiden");
-        p.classList.add("show");
+    show(element){
+        element.classList.remove("hiden");
+        element.classList.add("show");
     }
 
     /*loadBoard(){
@@ -47,7 +47,7 @@ class ViewControl{
 
     changeStartingPlayerParagraph(p, turn){
         p.innerHTML = "Comienza el jugador " + turn;
-        this.showParagraph(p);
+        this.show(p);
     }
 
     changeParagraphTurn(p, turn){
