@@ -7,12 +7,16 @@ class Game {
         this.cantPieceWinner = cantPieceWinner;
     }
 
-    playerTurnControl(lastTurn, newTurn) {
+    /*playerTurnControl(lastTurn, newTurn) {
         return lastTurn != newTurn;
+    }*/
+
+    playerTurnControl(turn, player) {
+        return turn == player;
     }
 
-    changeTurn(lastTurn) {
-        if (lastTurn == 1) {
+    changeTurn(turn) {
+        if (turn == 1) {
             return 2;//newTurn
         } else {
             return 1;//newTurn

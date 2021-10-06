@@ -45,15 +45,13 @@ class ViewControl{
         }
     }
 
-    changeStartingPlayerParagraph(p, lastPlayer){
-        let startPlayer;
-        if(lastPlayer == 2){
-            startPlayer = 1;
-        }else{
-            startPlayer = 2;
-        }
-        p.innerHTML = "Comienza el jugador " + startPlayer;
+    changeStartingPlayerParagraph(p, turn){
+        p.innerHTML = "Comienza el jugador " + turn;
         this.showParagraph(p);
+    }
+
+    changeParagraphTurn(p, turn){
+        p.innerHTML = "Turno del jugador " + turn;
     }
 
     changePieceImage(source, player, pieces){

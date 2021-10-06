@@ -6,6 +6,8 @@ let h1 = document.getElementById("winnerPlayer");
 let pColor = document.getElementById("pColor");
 //parrafo del DOM que va a indicar que jugador tiene el turno
 let pStartPlayer = document.getElementById("pStartPlayer");
+//parrafo de DOM donde se muestra el turno
+let pTurnPlayer = document.getElementById("pTurnPlayer");
 //canvas del DOM don de se pinta el tablero y las fichas
 let canvas = document.getElementById("canvas");
 /** @type {CanvasRenderingContext2D} */
@@ -205,13 +207,12 @@ function onMouseUp(e){
             let posCelda= matrixBoard.lastFreeCell(matrixBoard.whichColumn(x)).posEnArreglo;
             cell.setPiece(clickPiece);
             clickPiece.setInCell(true);
-            //lastClickedPiece.setInCell(true);
+            turn = game.changeTurn(turn);
             //hasta acá tiene que ir la ficha
             xCell= cell.getXStart()+((cell.getXEnd()-cell.getXStart())/2);
             yCell= cell.getYStart()+((cell.getYEnd()-cell.getYStart())/2);
             rangeMove = (yCell-y)/30;
             xTransition = xCell;
-            //yTransition = y;
             transition();
             //acá bloquear que se pueda mover la ficha
             let winner = game.searchWinner(cell.getNroColumn(), cell.getNroRow(), posCelda);
@@ -219,10 +220,13 @@ function onMouseUp(e){
             if(winner != null){
                 gameEnd= true;
                 setTimeout(function(){
-                    viewControl.changeStartingPlayerParagraph(pStartPlayer, lastTurn);
+                    viewControl.changeParagraphTurn(pTurnPlayer, turn);
+                    viewControl.changeStartingPlayerParagraph(pStartPlayer, turn);
                     h1.innerHTML = "Ganó el jugador "+winner;
                     viewControl.viewWinner(div, canvas);
                 }, 3000);
+            }else{
+                viewControl.changeParagraphTurn(pTurnPlayer, turn);
             }
         }
         board.draw();
@@ -230,14 +234,11 @@ function onMouseUp(e){
         frontBoard.draw();
     }
 }
-
+let turn = 1;
 function onMouseDown(e){
     board.draw();
     isMouseDown = true;
     if(lastClickedPiece != null && gameEnd===false){
-        if(gameEnd===false){
-            lastTurn = lastClickedPiece.getPlayer();
-        }
         lastClickedPiece = null;
     }
     clickPiece = findClickedFigure(e.layerX, e.layerY);
@@ -247,7 +248,6 @@ function onMouseDown(e){
         //oculta el mensaje (parrafo) del jugador que comienza
         viewControl.hidenParagraph(pStartPlayer);
         //guarda el numero de jugador del turno actual del jugador
-        newTurn = clickPiece.getPlayer();
         lastClickedPiece = clickPiece;
     }
     /**
@@ -262,13 +262,13 @@ function onMouseDown(e){
 
 function onMouseMove(e){
     board.draw();
-    if(isMouseDown && lastClickedPiece != null && game.playerTurnControl(lastTurn, newTurn) && start=== true){
-        lastClickedPiece.setPosition(e.layerX, e.layerY, lastClickedPiece.getInCell());
-        drawPiece();
-    }else{
-        drawPiece();
+    //game.playerTurnControl(lastTurn, newTurn)
+    if(isMouseDown && lastClickedPiece != null && start=== true){
+        if(game.playerTurnControl(turn, lastClickedPiece.getPlayer())){
+            lastClickedPiece.setPosition(e.layerX, e.layerY, lastClickedPiece.getInCell());
+        }
     }
-
+    drawPiece();
     frontBoard.draw();
 }
 
@@ -296,14 +296,14 @@ function loadBoardAndPieces(){
     frontBoard.draw();
 }
 //cambia en el DOM el jugador que comienza a jugar.
-viewControl.changeStartingPlayerParagraph(pStartPlayer, lastTurn);
+viewControl.changeStartingPlayerParagraph(pStartPlayer, turn);
 
 canvas.addEventListener('mousedown', onMouseDown, false);
 canvas.addEventListener('mouseup', onMouseUp, false);
 canvas.addEventListener('mousemove', onMouseMove, false);
 //recargar tablero una vez que la partida se gana y se aprieta en el botón correspondiente
 document.getElementById("btnLoadCanvas").addEventListener("click",function(){
-    viewControl.changeStartingPlayerParagraph(pStartPlayer, newTurn);
+    viewControl.changeStartingPlayerParagraph(pStartPlayer, turn);
     start = false;
     gameEnd= false;
     loadBoardAndPieces();
