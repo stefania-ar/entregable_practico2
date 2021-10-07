@@ -7,10 +7,6 @@ class Game {
         this.cantPieceWinner = cantPieceWinner;
     }
 
-    /*playerTurnControl(lastTurn, newTurn) {
-        return lastTurn != newTurn;
-    }*/
-
     playerTurnControl(turn, player) {
         return turn == player;
     }
@@ -25,6 +21,17 @@ class Game {
 
     getBoard() {
         return this.board;
+    }
+
+    decreasePieceOffGame(contPieceOffGame){
+        contPieceOffGame--;
+    }
+    pieceOffGame(contPieceOffGame){
+        if(contPieceOffGame > 0){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     searchWinner(column, row, posCelda) {
@@ -44,7 +51,6 @@ class Game {
         let i = 0;
         let winnerInRow = { winner: false, player: null };
         let cantFila = this.board.getCantY();
-        let cantColumn = this.board.getCantX() - 1;
         while (!winnerInRow.winner && i < this.board.getCells().length) {
             winnerInRow = this.searchPiecesByColumn(i);
             i += cantFila;
@@ -126,9 +132,12 @@ class Game {
 
     searchDiagonal(posCelda){
         let player = this.board.getCells()[posCelda].getPiece().getPlayer();
-        let newb= this.searchDiagonalUpRight(posCelda);
-        let newb2= this.searchDiagonalDownLeft(posCelda);
-        if((this.searchDiagonalUpRight(posCelda) + this.searchDiagonalDownLeft(posCelda))+1 >= this.cantPieceWinner ){//mayor a dos porque no lo toma a dos, apartir del 3 más la ficha en la que estoy hace 4 fichas;
+        let newb= this.searchDiagonalUpLeft(posCelda);
+        let newb2= this.searchDiagonalDownRight(posCelda);
+        console.log(this.searchDiagonalUpRight(posCelda) + this.searchDiagonalDownLeft(posCelda)+1);
+        console.log(this.searchDiagonalUpLeft(posCelda) + this.searchDiagonalDownRight(posCelda)+1);
+         console.log(" ");
+         if((this.searchDiagonalUpRight(posCelda) + this.searchDiagonalDownLeft(posCelda))+1 >= this.cantPieceWinner ){//mayor a dos porque no lo toma a dos, apartir del 3 más la ficha en la que estoy hace 4 fichas;
             return {winner:true, player:player};
         }else if(this.searchDiagonalUpLeft(posCelda) + this.searchDiagonalDownRight(posCelda)+1 >= this.cantPieceWinner){
             return {winner:true, player:player}
@@ -180,7 +189,7 @@ class Game {
         let contPiece = 0;
         let newCell, nextCell, nextPiece, player, nextPlayer;
         player = cells[posCelda].getPiece().getPlayer();
-        
+
         while(equalsPlayer && i <=posCelda+((this.board.getCantY()-1)*this.cantPieceWinner-1) && i<cells.length){
             newCell = cells[i];
             nextCell = cells[i+(this.board.getCantY()-1)];
@@ -235,9 +244,9 @@ class Game {
         while(equalsPlayer && i < cells.length){
             //newCell = cells[i];
 
-            if(i+(this.board.getCantX())+1 < cells.length){
+            if(i+(this.board.getCantY())+1 < cells.length){
 
-                nextCell = cells[i+(this.board.getCantX()+1)];
+                nextCell = cells[i+(this.board.getCantY()+1)];
                 //if(this.trueCellDown(newCell, nextCell)){
                     nextPiece = nextCell.getPiece();
                     if(nextPiece != null){
@@ -253,7 +262,7 @@ class Game {
                 }else{
                     equalsPlayer =false;
                 }
-            i += (this.board.getCantX()+1);
+            i += (this.board.getCantY()+1);
         }
         return contPiece;
     }
@@ -266,10 +275,10 @@ class Game {
         let nextCell, nextPiece, player, nextPlayer;
         player = cells[posCelda].getPiece().getPlayer();
 
-        while(equalsPlayer && i >=posCelda-((this.board.getCantX()-1)*this.cantPieceWinner-1) && i> 0){
+        while(equalsPlayer && i >=posCelda-((this.board.getCantY()-1)*this.cantPieceWinner-1) && i> 0){
 
-            if(i-(this.board.getCantX())+1 > 0){
-            nextCell = cells[i-(this.board.getCantX()+1)];
+            if(i-(this.board.getCantY())+1 > 0){
+            nextCell = cells[i-(this.board.getCantY()+1)];
 
             if(nextCell != null){
                 //if(this.trueCellUp(newCell, nextCell)){
@@ -290,7 +299,7 @@ class Game {
             }else{
                 equalsPlayer = false;
             }
-            i -= (this.board.getCantX()+1);
+            i -= (this.board.getCantY()+1);
         }
         return contPiece;
     }

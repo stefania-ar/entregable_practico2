@@ -38,7 +38,6 @@ const piecePixel = radio*2;
 //se les pasa los pixels de cada celda.
 //parte de atras del tablero
 let board = new Board(dimension(fichasEnLinea).x, dimension(fichasEnLinea).y, ctx, width, height, pixels);
-console.log(board);
 //parte frontal del tablero
 let frontBoard = new FrontBoard(dimension(fichasEnLinea).x, dimension(fichasEnLinea).y, ctx, width, height, pixels);
 //matrix que contiene las celdas del tablero
@@ -68,6 +67,8 @@ let isMouseDown = false;
 //que el ultimo turno fue el del jugador 2, asi puede empezar el jugador 1
 let lastTurn = 2;
 let newTurn;
+//variable que controla cuantas piezas quedan sin jugar, para que cuando no queden piezas se corta el juego
+let contPieceOffGame;
 //se comienza dibujando la parte de atras del tablero
 board.draw();
 //se dibuja la parte frontal del tablero
@@ -98,17 +99,17 @@ function dimension(fichasEnLinea){
 image1.onload = function(){
     if(pieces.length < dimension(fichasEnLinea).x * dimension(fichasEnLinea).y){
         initPieces(1);
+        contPieceOffGame = pieces.length;
     }
-    //initPieces(2);
     board.draw();
     drawPiece();
     frontBoard.draw();
 }
 
 image2.onload = function(){
-    //initPieces(1);
     if(pieces.length < dimension(fichasEnLinea).x * dimension(fichasEnLinea).y){
         initPieces(2);
+        contPieceOffGame = pieces.length;
     }
     board.draw();
     drawPiece();
@@ -225,6 +226,7 @@ function onMouseUp(e){
             cell.setPiece(clickPiece);
             clickPiece.setInCell(true);
             turn = game.changeTurn(turn);
+            game.decreasePieceOffGame(contPieceOffGame);
             //hasta acá tiene que ir la ficha
             xCell= cell.getXStart()+((cell.getXEnd()-cell.getXStart())/2);
             yCell= cell.getYStart()+((cell.getYEnd()-cell.getYStart())/2);
@@ -235,7 +237,7 @@ function onMouseUp(e){
             let winner = game.searchWinner(cell.getNroColumn(), cell.getNroRow(), posCelda);
 
             if(winner != null){
-                gameEnd= true;
+                gameEnd = true;
                 setTimeout(function(){
                     viewControl.changeParagraphTurn(pTurnPlayer, turn);
                     viewControl.changeStartingPlayerParagraph(pStartPlayer, turn);
@@ -250,6 +252,15 @@ function onMouseUp(e){
         board.draw();
         drawPiece();
         frontBoard.draw();
+        if(!game.pieceOffGame(contPieceOffGame)){
+            console.log();
+            viewControl.changeStartingPlayerParagraph(pStartPlayer, turn);
+            viewControl.show(divPStartPTurn);
+            start = false;
+            gameEnd = false;
+            loadBoardAndPieces();
+            viewControl.show(divHer);
+        }
     }
 }
 let turn = 1;
@@ -373,7 +384,6 @@ document.getElementById("dimensionBoard").addEventListener("change",function(e){
     if(!start){
         //clearCanvas();
         fichasEnLinea = Number(extractDimension(this));
-        
         cantPieceByPlayer = (dimension(fichasEnLinea).x * dimension(fichasEnLinea).y)/2;
         game.setCantPieceWinner(fichasEnLinea);
         board.setDimension(fichasEnLinea);
@@ -408,6 +418,7 @@ let arrayImagePlayer2 = Array.from(imagePlayer2);
 arrayImagePlayer2.forEach(img => {
     img.onload=function(){
         img.addEventListener("click", function () {
+            console.log("click");
             let source= img.getAttribute("src");
             if(!start){
                 image2.src= source;

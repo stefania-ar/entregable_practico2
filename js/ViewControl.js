@@ -5,7 +5,7 @@ class ViewControl{
         div.classList.remove("hiden");
         div.classList.add("show");
         div.classList.remove("show");
-        canvas.classList.add("hiden");
+        //canvas.classList.add("hiden");
     }
 
     hidenWinner(div, canvas){
