@@ -45,7 +45,7 @@ class Game {
         let winnerInRow = { winner: false, player: null };
         let cantFila = this.board.getCantY();
         let cantColumn = this.board.getCantX() - 1;
-        while (!winnerInRow.winner && i < this.board.getCells().length - cantColumn) {
+        while (!winnerInRow.winner && i < this.board.getCells().length) {
             winnerInRow = this.searchPiecesByColumn(i);
             i += cantFila;
         }
@@ -92,9 +92,8 @@ class Game {
         let cont = 1;
         let player;
 
-        for (let i = row-1; i < row * this.board.getCantX() - 1; i += this.board.getCantX()) {
-            if(cont<this.cantPieceWinner){
-
+        for (let i = row-1; i < cells.length; i += this.board.getCantY() ) { //row es el indice del arreglo +1
+            if(cont<this.cantPieceWinner && i + this.board.getCantY()< cells.length){
                 let piece = cells[i].getPiece();
                 let p1 = cells[i + this.board.getCantY()].getPiece();
 
@@ -127,16 +126,15 @@ class Game {
 
     searchDiagonal(posCelda){
         let player = this.board.getCells()[posCelda].getPiece().getPlayer();
-        let newb= this.searchDiagonalUpLeft(posCelda);
-        let newb2= this.searchDiagonalDownRight(posCelda);
-        if((this.searchDiagonalUpRight(posCelda) + this.searchDiagonalDownLeft(posCelda)) > this.cantPieceWinner/2){//mayor a dos porque no lo toma a dos, apartir del 3 más la ficha en la que estoy hace 4 fichas;
+        let newb= this.searchDiagonalUpRight(posCelda);
+        let newb2= this.searchDiagonalDownLeft(posCelda);
+        if((this.searchDiagonalUpRight(posCelda) + this.searchDiagonalDownLeft(posCelda))+1 >= this.cantPieceWinner ){//mayor a dos porque no lo toma a dos, apartir del 3 más la ficha en la que estoy hace 4 fichas;
             return {winner:true, player:player};
-        }else if(this.searchDiagonalUpLeft(posCelda) + this.searchDiagonalDownRight(posCelda)>this.cantPieceWinner/2){
+        }else if(this.searchDiagonalUpLeft(posCelda) + this.searchDiagonalDownRight(posCelda)+1 >= this.cantPieceWinner){
             return {winner:true, player:player}
         }else{
             return {winner:false, player:null};
         }
-        //let nextCell = this.nextCell(column, row, posCelda);
 
     }
 
@@ -150,8 +148,8 @@ class Game {
 
         while(equalsPlayer && i > 0){
             newCell = cells[i];
-            if(i-(this.board.getCantX())> 0){
-                nextCell = cells[i-(this.board.getCantX()-1)];
+            if(i-(this.board.getCantY())> 0){
+                nextCell = cells[i-(this.board.getCantY()-1)];
                 if(this.trueCellDown(newCell, nextCell)){
                     nextPiece = nextCell.getPiece();
                     if(nextPiece != null){
@@ -170,7 +168,7 @@ class Game {
             }else{
                 equalsPlayer = false;
             }
-            i -= (this.board.getCantX()-1);
+            i -= (this.board.getCantY()-1);
         }
         return contPiece;
     }
@@ -182,9 +180,10 @@ class Game {
         let contPiece = 0;
         let newCell, nextCell, nextPiece, player, nextPlayer;
         player = cells[posCelda].getPiece().getPlayer();
-        while(equalsPlayer && i <=posCelda+((this.board.getCantX()-1)*this.cantPieceWinner-1) && i<cells.length){
+        
+        while(equalsPlayer && i <=posCelda+((this.board.getCantY()-1)*this.cantPieceWinner-1) && i<cells.length){
             newCell = cells[i];
-            nextCell = cells[i+(this.board.getCantX()-1)];
+            nextCell = cells[i+(this.board.getCantY()-1)];
             if(nextCell != null){
                 if(this.trueCellUp(newCell, nextCell)){
                     nextPiece = nextCell.getPiece();
@@ -204,7 +203,7 @@ class Game {
             }else{
                 equalsPlayer = false;
             }
-            i += (this.board.getCantX()-1);
+            i += (this.board.getCantY()-1);
         }
         return contPiece;
     }

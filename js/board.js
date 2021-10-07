@@ -9,24 +9,25 @@ class Board {
         this.widthCanvas = width;
         this.heightCanvas= height;
         this.width= this.pixels * this.cantX;
-        this.height= this.pixels * this.cantY;
+        this.height= this.pixels * this.cantY; //si sobra tiempo plantear una mejora
         this.posY= this.centerY();
         this.PosX= this.centerX();
     }
 
     draw() {
         /** @type {CanvasRenderingContext2D} */
-        let ImageData = this.ctx.createImageData(this.width, this.height); //ver qué onda por que tira long error
+        let ImageData = this.ctx.createImageData(this.width, this.height); 
 
         for (let x = 0; x < this.width; x++) {
 
-            for (let y = 0; y < this.height; y++) {
+            for (let y = 0; y < this.height+this.pixels; y++) {
                 this.setPixel(ImageData, x, y, 255, 0, 0, 255);
             }
         }
         //console.log(this.centerY());
 
-        this.ctx.putImageData(ImageData, this.centerX(), this.centerY()); //ver qué onda por que tira long error
+        this.ctx.putImageData(ImageData, this.centerX(), this.centerY()); 
+        
     };
 
     setPixel(imageData, x, y, r, g, b, a){
@@ -60,12 +61,22 @@ class Board {
         return this.cantY;
     }
 
-    setDimension(dimension){
-        this.cantX = dimension;
-        this.cantY = dimension;
+    setDimension(fichasEnLinea){
+        if(fichasEnLinea===4){
+            this.cantX= 7;
+            this.cantY= 6;
+        }else if(fichasEnLinea===6){
+            this.cantX= 8;
+            this.cantY= 7;
+        }else{
+            this.cantX= 9;
+            this.cantY= 8;
+        }
         this.width= this.pixels * this.cantX;
         this.height= this.pixels * this.cantY;
         this.posY= this.centerY();
         this.PosX= this.centerX();
     }
+
+    
 }

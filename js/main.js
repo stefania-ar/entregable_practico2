@@ -1,7 +1,7 @@
 //div del DOM que contiene formularios de apariencia
 let divPStartPTurn= document.getElementById("div_pStart_pTurn");
 //div del DOM que contiene formularios de apariencia
-let divHer = document.getElementById("herramientas_de_apariencia");div_pStart_pTurn
+let divHer = document.getElementById("herramientas_de_apariencia");
 //div del DOM que contiene mensaje del jugador ganador
 let div = document.getElementById("winner");
 //h1 del DOM que mostrará el jugador ganador
@@ -24,11 +24,11 @@ let height = canvas.height;
 //formulario del DOM para cambbiar la dimensión del tablero
 let formDimension = document.getElementById("dimensionBoard");
 //leemos la dimensión por defecto desde el DOM
-let dimension = Number(extractDimension(formDimension));
+let fichasEnLinea = Number(extractDimension(formDimension));
 //se calcula la cantidad de piezas por jugador dependiendo de as dimensiones del tablero
-let cantPieceByPlayer = (dimension*dimension)/2;
+let cantPieceByPlayer = (dimension(fichasEnLinea).x * dimension(fichasEnLinea).y)/2;
 //se establece el radio de las piezas, ya que son creadas a partir de un círculo.
-let radio= 20;
+let radio= 15;
 //se establece el tamaño de las celdas del tablero
 let pixels = 70;
 //establece el tamaño de la imagen de las piezas
@@ -37,14 +37,15 @@ const piecePixel = radio*2;
 //se les pasa width y height para centrarlo.
 //se les pasa los pixels de cada celda.
 //parte de atras del tablero
-let board = new Board(dimension, dimension, ctx, width, height, pixels);
+let board = new Board(dimension(fichasEnLinea).x, dimension(fichasEnLinea).y, ctx, width, height, pixels);
+console.log(board);
 //parte frontal del tablero
-let frontBoard = new FrontBoard(dimension, dimension, ctx, width, height, pixels);
+let frontBoard = new FrontBoard(dimension(fichasEnLinea).x, dimension(fichasEnLinea).y, ctx, width, height, pixels);
 //matrix que contiene las celdas del tablero
-let matrixBoard = new MatrixBoard(dimension, dimension, ctx, width, height, pixels);
+let matrixBoard = new MatrixBoard(dimension(fichasEnLinea).x, dimension(fichasEnLinea).y, ctx, width, height, pixels);
 //se inicia una variable que maneja el comportamiento del juego
 //usado para buscar el ganador
-let game = new Game(matrixBoard, dimension);
+let game = new Game(matrixBoard, fichasEnLinea);
 //esta variable guarda el comportamiento de vista de los distintos elementos del DOM
 let viewControl = new ViewControl();
 //variable que determina si el juego comenzó
@@ -81,10 +82,21 @@ image2.src="img/piece2.png";
 imageBoard = new Image(); //iniciar ruta
 imageBoard.src="img/ventana.png";
 
-
+function dimension(fichasEnLinea){
+    if(fichasEnLinea===4){
+        return {x: 7,
+                y: 6}
+    }else if(fichasEnLinea===6){
+        return{x: 8,
+               y: 7}
+    }else{
+        return  {x: 9,
+                y: 8}
+    }
+}
 
 image1.onload = function(){
-    if(pieces.length < dimension*dimension){
+    if(pieces.length < dimension(fichasEnLinea).x * dimension(fichasEnLinea).y){
         initPieces(1);
     }
     //initPieces(2);
@@ -95,7 +107,7 @@ image1.onload = function(){
 
 image2.onload = function(){
     //initPieces(1);
-    if(pieces.length < dimension*dimension){
+    if(pieces.length < dimension(fichasEnLinea).x * dimension(fichasEnLinea).y){
         initPieces(2);
     }
     board.draw();
@@ -107,7 +119,8 @@ imageBoard.onload = function(){
     frontBoard.setImage(imageBoard);
     frontBoard.draw();
 }
-//extrae el valor del formilario de dimension del tablero
+
+//extrae el valor del formulario de dimension del tablero
 function extractDimension(form){
     var data = new FormData(form);
     for (const entry of data) {
@@ -359,12 +372,13 @@ document.getElementById("formColorPlayer2").addEventListener("change",function(e
 document.getElementById("dimensionBoard").addEventListener("change",function(e){
     if(!start){
         //clearCanvas();
-        dimension = Number(extractDimension(this));
-        cantPieceByPlayer = (dimension*dimension)/2;
-        game.setCantPieceWinner(dimension);
-        board.setDimension(dimension);
-        frontBoard.setDimension(dimension);
-        matrixBoard.setDimension(dimension);
+        fichasEnLinea = Number(extractDimension(this));
+        
+        cantPieceByPlayer = (dimension(fichasEnLinea).x * dimension(fichasEnLinea).y)/2;
+        game.setCantPieceWinner(fichasEnLinea);
+        board.setDimension(fichasEnLinea);
+        frontBoard.setDimension(fichasEnLinea);
+        matrixBoard.setDimension(fichasEnLinea);
         board.draw();
         pieces = [];
         initPieces(1);
