@@ -14,6 +14,14 @@ class Board {
         this.PosX= this.centerX();
     }
 
+    getPosY(){
+        return this.posY;
+    }
+
+    getPosX(){
+        return this.PosX;
+    }
+    
     draw() {
         /** @type {CanvasRenderingContext2D} */
         let ImageData = this.ctx.createImageData(this.width, this.height); 

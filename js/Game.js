@@ -24,7 +24,7 @@ class Game {
     }
 
     decreasePieceOffGame(contPieceOffGame){
-        contPieceOffGame--;
+        return contPieceOffGame-1;
     }
     pieceOffGame(contPieceOffGame){
         if(contPieceOffGame > 0){

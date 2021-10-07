@@ -51,9 +51,20 @@ class Piece{
         return (this.getX()> x_ini && this.getX< x_fin) && (this.getY()> y_ini && this.getY< y_fin);
     }
 
+    isInsideBoard(xMouse, yMouse, pixelX, pixelY, width, height){
+            return xMouse > pixelX && xMouse < pixelX +width && yMouse < pixelY + height && yMouse> pixelY;
+        
+    }
+
     setPosition(x, y, inCell){
         if(!inCell){
             this.x = x;
+            this.y = y;
+        }
+    }
+
+    setPosition2(y, inCell){
+        if(!inCell){
             this.y = y;
         }
     }

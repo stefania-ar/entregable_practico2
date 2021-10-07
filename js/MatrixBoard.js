@@ -91,13 +91,13 @@ class MatrixBoard extends Board {
         return arrayFilterCells;
     }*/
     //pregunta si la pieza está dentro del rango del tablero
-    isPieceWithinWidth(x) {
-        return (x > this.PosX && x < this.PosX + this.width);
+    isPieceWithinWidth(x, y) {
+        return (x > this.PosX && x < this.PosX + this.width && y < this.posY);
 
     }
     //retorna el numero de columna en el que se encuentra
-    whichColumn(x) {
-        if(this.isPieceWithinWidth(x)){
+    whichColumn(x, y) {
+        if(this.isPieceWithinWidth(x, y)){
             let column = 1;
             let i = this.PosX;
             let find = false;

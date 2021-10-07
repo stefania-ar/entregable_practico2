@@ -220,13 +220,15 @@ function onMouseUp(e){
     if(clickPiece != null && !clickPiece.getInCell()){
         let x= clickPiece.getX();
         let y= clickPiece.getY();
-        if(matrixBoard.whichColumn(x) > 0){
-            let cell = matrixBoard.lastFreeCell(matrixBoard.whichColumn(x)).lastFreeCell;
-            let posCelda= matrixBoard.lastFreeCell(matrixBoard.whichColumn(x)).posEnArreglo;
+        if(matrixBoard.whichColumn(x, y) > 0){
+            let cell = matrixBoard.lastFreeCell(matrixBoard.whichColumn(x, y)).lastFreeCell;
+            let posCelda= matrixBoard.lastFreeCell(matrixBoard.whichColumn(x, y)).posEnArreglo;
             cell.setPiece(clickPiece);
             clickPiece.setInCell(true);
             turn = game.changeTurn(turn);
-            game.decreasePieceOffGame(contPieceOffGame);
+            contPieceOffGame= game.decreasePieceOffGame(contPieceOffGame);
+            console.log(contPieceOffGame);
+            console.log(pieces.length);
             //hasta acá tiene que ir la ficha
             xCell= cell.getXStart()+((cell.getXEnd()-cell.getXStart())/2);
             yCell= cell.getYStart()+((cell.getYEnd()-cell.getYStart())/2);
@@ -253,14 +255,16 @@ function onMouseUp(e){
         drawPiece();
         frontBoard.draw();
         if(!game.pieceOffGame(contPieceOffGame)){
-            console.log();
+            console.log(contPieceOffGame);
             viewControl.changeStartingPlayerParagraph(pStartPlayer, turn);
             viewControl.show(divPStartPTurn);
             start = false;
             gameEnd = false;
             loadBoardAndPieces();
             viewControl.show(divHer);
-        }
+        }/*else{
+            gameEnd =true;
+        }*/
     }
 }
 let turn = 1;
@@ -299,8 +303,14 @@ function onMouseMove(e){
     //game.playerTurnControl(lastTurn, newTurn)
     if(isMouseDown && lastClickedPiece != null && start=== true){
         if(game.playerTurnControl(turn, lastClickedPiece.getPlayer())){
-            lastClickedPiece.setPosition(e.layerX, e.layerY, lastClickedPiece.getInCell());
-        }
+            if(! lastClickedPiece.isInsideBoard(e.layerX, e.layerY, board.getPosX(), board.getPosY(), 
+            board.getWidth(), board.getHeight())){
+                lastClickedPiece.setPosition(e.layerX, e.layerY, lastClickedPiece.getInCell());
+
+            }//else{
+                //lastClickedPiece.setPosition(e.layerY, lastClickedPiece.getInCell());
+                //   }
+            }
     }
     drawPiece();
     frontBoard.draw();
@@ -393,6 +403,7 @@ document.getElementById("dimensionBoard").addEventListener("change",function(e){
         pieces = [];
         initPieces(1);
         initPieces(2);
+        contPieceOffGame = pieces.length;
         drawPiece();
         frontBoard.draw();
     }
