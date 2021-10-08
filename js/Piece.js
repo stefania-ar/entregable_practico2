@@ -51,9 +51,8 @@ class Piece{
         return (this.getX()> x_ini && this.getX< x_fin) && (this.getY()> y_ini && this.getY< y_fin);
     }
 
-    isInsideBoard(xMouse, yMouse, pixelX, pixelY, width, height){
-            return xMouse > pixelX && xMouse < pixelX +width && yMouse < pixelY + height && yMouse> pixelY;
-        
+    isInsideBoard(xMouse, yMouse, boardPosX, boardPosY, boardWidth, boardHeight, radio){
+        return xMouse > boardPosX-radio && xMouse < boardPosX+boardWidth+radio && yMouse < boardPosY+boardHeight+radio && yMouse > boardPosY-radio;
     }
 
     setPosition(x, y, inCell){
@@ -63,9 +62,11 @@ class Piece{
         }
     }
 
-    setPosition2(y, inCell){
-        if(!inCell){
-            this.y = y;
+    setPositionOffBoard(layerX, layerY, boardPosX, boardPosY, boardWidth, radio){
+        if((this.x > boardPosX-radio && this.x < boardPosX+boardWidth+radio && this.y < boardPosY-radio) || (this.x > boardPosX-radio && this.x < boardPosX+boardWidth+radio && this.y > boardPosY-radio)){
+            this.x = layerX;
+        }else{
+            this.y = layerY;
         }
     }
 

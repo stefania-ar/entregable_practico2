@@ -303,14 +303,12 @@ function onMouseMove(e){
     //game.playerTurnControl(lastTurn, newTurn)
     if(isMouseDown && lastClickedPiece != null && start=== true){
         if(game.playerTurnControl(turn, lastClickedPiece.getPlayer())){
-            if(! lastClickedPiece.isInsideBoard(e.layerX, e.layerY, board.getPosX(), board.getPosY(), 
-            board.getWidth(), board.getHeight())){
+            if(!lastClickedPiece.isInsideBoard(e.layerX, e.layerY, board.getPosX(), board.getPosY(), board.getWidth(), board.getHeight(), radio)){
                 lastClickedPiece.setPosition(e.layerX, e.layerY, lastClickedPiece.getInCell());
-
-            }//else{
-                //lastClickedPiece.setPosition(e.layerY, lastClickedPiece.getInCell());
-                //   }
+            }else{
+                lastClickedPiece.setPositionOffBoard(e.layerX, e.layerY, board.getPosX(), board.getPosY(), board.getWidth(), radio);
             }
+        }
     }
     drawPiece();
     frontBoard.draw();
