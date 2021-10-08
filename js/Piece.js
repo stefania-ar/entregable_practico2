@@ -55,18 +55,31 @@ class Piece{
         return xMouse > boardPosX-radio && xMouse < boardPosX+boardWidth+radio && yMouse < boardPosY+boardHeight+radio && yMouse > boardPosY-radio;
     }
 
-    setPosition(x, y, inCell){
+    setPosition(x, y, inCell, player, boardX, boardWidth){
         if(!inCell){
-            this.x = x;
-            this.y = y;
+            if(player ===1 && x< boardX + boardWidth){
+                this.x = x;
+                this.y = y;
+            }else if(player ===2 && x > boardX){
+                this.x =x;
+                this.y =y;
+            }
         }
     }
 
-    setPositionOffBoard(layerX, layerY, boardPosX, boardPosY, boardWidth, radio){
-        if((this.x > boardPosX-radio && this.x < boardPosX+boardWidth+radio && this.y < boardPosY-radio) || (this.x > boardPosX-radio && this.x < boardPosX+boardWidth+radio && this.y > boardPosY-radio)){
-            this.x = layerX;
-        }else{
-            this.y = layerY;
+    setPositionOfTransition(xTransition, yTransition){
+        this.x =xTransition;
+        this.y =yTransition;
+    }
+
+    setPositionOffBoard(layerX, layerY, boardPosX, boardPosY, boardWidth, radio, inCell){
+        if(!inCell){
+            if((this.x > boardPosX-radio && this.x < boardPosX+boardWidth+radio && this.y < boardPosY-radio) || 
+            (this.x > boardPosX-radio && this.x < boardPosX+boardWidth+radio && this.y > boardPosY-radio)){
+                this.x = layerX;
+            }else{
+                this.y = layerY;
+            }
         }
     }
 

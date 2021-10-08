@@ -1,139 +1,147 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="css/inputRadio.css">
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="css/inputRadio.css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body style="background-color: azure;">
   <header class="header">
     <!--<h1>Cuatro en Linea</h1>-->
     <img src="img/heder.jpg" alt="">
   </header>
+  
   <div class="div_contenedor">
-   <div class="show" id="herramientas_de_apariencia">
-    <div class="div_herramientas_piece">
-      <div class="div_herramientas_player">
-        <p  class="p p_width">Fichas jugador 1</p>
-        <div class="div_herramientas" >
-          <form class="form_Color_Player1" id="formColorPlayer1">
-            <p class="p p_width">color</p>
-            <div class="div_input">
-              <label class="container">
-                <input type="radio" name="radio" value="blue">
-                <!--poner una imagen de la ficha y sacar span-->
-                <span class="checkmark blue"></span>
-              </label>
-              <label class="container">
-                <input type="radio" name="radio" value="green" checked>
-                <!--poner una imagen de la ficha y sacar span-->
-                <span class="checkmark green"></span>
-              </label>
-              <label class="container">
-                <input type="radio" name="radio" value="yellow">
-                <!--poner una imagen de la ficha y sacar span-->
-                <span class="checkmark yellow"></span>
-              </label>
-              <label class="container">
-                <input type="radio" name="radio" value="red">
-                <!--poner una imagen de la ficha y sacar span-->
-                <span class="checkmark red"></span>
-              </label>
+    <div class="show" id="herramientas_de_apariencia">
+      <div class="div_herramientas_piece">
+        <div class="div_herramientas_player">
+          <p class="p p_width">Fichas jugador 1</p>
+          <div class="div_herramientas">
+            <form class="form_Color_Player1" id="formColorPlayer1">
+              <p class="p p_width">color</p>
+              <div class="div_input">
+                <label class="container">
+                  <input type="radio" name="radio" value="blue">
+                  <!--poner una imagen de la ficha y sacar span-->
+                  <span class="checkmark blue"></span>
+                </label>
+                <label class="container">
+                  <input type="radio" name="radio" value="green" checked>
+                  <!--poner una imagen de la ficha y sacar span-->
+                  <span class="checkmark green"></span>
+                </label>
+                <label class="container">
+                  <input type="radio" name="radio" value="yellow">
+                  <!--poner una imagen de la ficha y sacar span-->
+                  <span class="checkmark yellow"></span>
+                </label>
+                <label class="container">
+                  <input type="radio" name="radio" value="red">
+                  <!--poner una imagen de la ficha y sacar span-->
+                  <span class="checkmark red"></span>
+                </label>
+              </div>
+            </form>
+            <div class="div_image_piece">
+              <!---Imagenes de fichas del player 1-->
+              <p class="p p_width">imagen</p>
+              <button class="pieza1Player1 btnImage"><img src="img/piece.png" alt="" class="imagen"></button>
+              <button class="pieza1Player1 btnImage"><img src="img/piece2.png" alt="" class="imagen"></button>
+              <button class="pieza1Player1 btnImage"><img src="img/piece3.png" alt="" class="imagen"></button>
             </div>
-          </form>
-          <div class="div_image_piece">
-            <!---Imagenes de fichas del player 1-->
-            <p class="p p_width">imagen</p>
-            <button class="pieza1Player1 btnImage"><img src="img/piece.png" alt="" class="imagen"></button>
-            <button class="pieza1Player1 btnImage"><img src="img/piece2.png" alt="" class="imagen"></button>
-            <button class="pieza1Player1 btnImage"><img src="img/piece3.png" alt="" class="imagen"></button>
+          </div>
+        </div>
+        <div class="div_herramientas_player">
+          <p class="p p_width">Fichas jugador 2</p>
+          <div class="div_herramientas">
+            <form class="form_Color_Player2" id="formColorPlayer2">
+              <p class="p p_width">color</p>
+              <div class="div_input">
+                <label class="container">
+                  <input type="radio" name="radio" value="blue" checked>
+                  <!--poner una imagen de la ficha y sacar span-->
+                  <span class="checkmark blue"></span>
+                </label>
+                <label class="container">
+                  <input type="radio" name="radio" value="green">
+                  <!--poner una imagen de la ficha y sacar span-->
+                  <span class="checkmark green"></span>
+                </label>
+                <label class="container">
+                  <input type="radio" name="radio" value="yellow">
+                  <!--poner una imagen de la ficha y sacar span-->
+                  <span class="checkmark yellow"></span>
+                </label>
+                <label class="container">
+                  <input type="radio" name="radio" value="red">
+                  <!--poner una imagen de la ficha y sacar span-->
+                  <span class="checkmark red"></span>
+                </label>
+              </div>
+            </form>
+            <div class="div_image_piece">
+              <!---Imagenes de fichas del player 2-->
+              <p class="p p_width">imagen</p>
+              <button class="pieza1Player2 btnImage"><img src="img/piece.png" alt="" class="imagen"></button>
+              <button class="pieza1Player2 btnImage"><img src="img/piece2.png" alt="" class="imagen"></button>
+              <button class="pieza1Player2 btnImage"><img src="img/piece3.png" alt="" class="imagen"></button>
+            </div>
           </div>
         </div>
       </div>
-      <div class="div_herramientas_player">
-        <p  class="p p_width">Fichas jugador 2</p>
-        <div class="div_herramientas">
-          <form class="form_Color_Player2" id="formColorPlayer2">
-            <p class="p p_width">color</p>
-            <div class="div_input">
-              <label class="container">
-                <input type="radio" name="radio" value="blue" checked>
-                <!--poner una imagen de la ficha y sacar span-->
-                <span class="checkmark blue"></span>
-              </label>
-              <label class="container">
-                <input type="radio" name="radio" value="green">
-                <!--poner una imagen de la ficha y sacar span-->
-                <span class="checkmark green"></span>
-              </label>
-              <label class="container">
-                <input type="radio" name="radio" value="yellow">
-                <!--poner una imagen de la ficha y sacar span-->
-                <span class="checkmark yellow"></span>
-              </label>
-              <label class="container">
-                <input type="radio" name="radio" value="red">
-                <!--poner una imagen de la ficha y sacar span-->
-                <span class="checkmark red"></span>
-              </label>
-            </div>
-        </form>
-        <div class="div_image_piece">
-          <!---Imagenes de fichas del player 2-->
-          <p class="p p_width">imagen</p>
-          <button class="pieza1Player2 btnImage"><img src="img/piece.png" alt="" class="imagen"></button>
-          <button class="pieza1Player2 btnImage"><img src="img/piece2.png" alt="" class="imagen"></button>
-          <button class="pieza1Player2 btnImage"><img src="img/piece3.png" alt="" class="imagen"></button>
-        </div>
-        </div>
-      </div>
-    </div>
-    <!--<div class="div_div_image_piece">
+      <!--<div class="div_div_image_piece">
 
     </div>-->
-    <div class="div_pColor">
-      <p class="pColor" id="pColor"></p><!--párrafo para mostrar mensaje de que el color ya fue elegido-->
-    </div>
-    <div>
-      <div class="div_dimension">
-        <form class="form_dimension" id="dimensionBoard">
-          <p class="p">Elegir cantidad de fichas en línea</p>
-          <div class="div_input div_input_dimension">
-            <div class="div_circulo">
-              <input class="hiden" type="radio" id="dimension4" name="dimensionBoard" value="4" >
-              <label for="dimension4">4</label>
+      <div class="div_pColor">
+        <p class="pColor" id="pColor"></p>
+        <!--párrafo para mostrar mensaje de que el color ya fue elegido-->
+      </div>
+      <div>
+        <div class="div_dimension">
+          <form class="form_dimension" id="dimensionBoard">
+            <p class="p">Elegir cantidad de fichas en línea</p>
+            <div class="div_input div_input_dimension">
+              <div class="div_circulo">
+                <input class="hiden" type="radio" id="dimension4" name="dimensionBoard" value="4">
+                <label for="dimension4">4</label>
+              </div>
+              <div class="div_circulo">
+                <input class="hiden" type="radio" id="dimension6" name="dimensionBoard" value="6" checked>
+                <label for="dimension6">6</label>
+              </div>
+              <div class="div_circulo">
+                <input class="hiden" type="radio" id="dimension8" name="dimensionBoard" value="8">
+                <label for="dimension8">8</label>
+              </div>
             </div>
-            <div class="div_circulo">
-              <input class="hiden" type="radio" id="dimension6"  name="dimensionBoard" value="6" checked>
-              <label for="dimension6">6</label>
-            </div>
-            <div class="div_circulo">
-              <input class="hiden" type="radio" id="dimension8"  name="dimensionBoard" value="8">
-              <label for="dimension8">8</label>
-            </div>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     </div>
-   </div>
     <div class="show" id="div_pStart_pTurn">
       <div class="div_start_player">
-        <p class="pStartPlayer" id="pStartPlayer"></p><!--párrafo para mostrar que jugador comienza el juego-->
+        <p class="pStartPlayer" id="pStartPlayer"></p>
+        <!--párrafo para mostrar que jugador comienza el juego-->
       </div>
       <div class="div_start_player">
-        <p class="pStartPlayer" id="pTurnPlayer"></p><!--párrafo para mostrar el turno-->
+        <p class="pStartPlayer" id="pTurnPlayer"></p>
+        <!--párrafo para mostrar el turno-->
       </div>
     </div>
     <div>
       <canvas class="show" id="canvas"></canvas>
     </div>
     <div class="div_winner hiden" id="winner">
-        <h1 id="winnerPlayer"></h1>
-        <button id="btnLoadCanvas">jugar de nuevo</button>
+      <h1 id="winnerPlayer"></h1>
+      <h1 class="hiden" id="H1GameOver">¡Se terminó el juego!</h1>
+      <button id="btnLoadCanvas">jugar de nuevo</button>
     </div>
+  </div>
   </div>
   <footer class="footer">
     <!--<p>testeado en Google Chrome</p>
@@ -149,4 +157,5 @@
   <script src="js/ViewControl.js"></script>
   <script src="js/main.js"></script>
 </body>
+
 </html>

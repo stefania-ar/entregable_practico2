@@ -69,6 +69,7 @@ let lastTurn = 2;
 let newTurn;
 //variable que controla cuantas piezas quedan sin jugar, para que cuando no queden piezas se corta el juego
 let contPieceOffGame;
+let timerOnStart=false;
 //se comienza dibujando la parte de atras del tablero
 board.draw();
 //se dibuja la parte frontal del tablero
@@ -205,15 +206,49 @@ function transition(){
     setTimeout(function(){
         let rangeMove = 30;//pixels
         let yTransition = Math.min(clickPiece.getY() + rangeMove, yCell);
-        clickPiece.setPosition(xTransition, yTransition);
+        clickPiece.setPositionOfTransition(xTransition, yTransition);
         drawPiece();
         frontBoard.draw();
         if(yTransition < yCell){
             //window.requestAnimationFrame(transition);
             transition();
         }
-    }, 30);
+    }, 10);
 }
+
+let h1fromHTML =document.getElementById("H1GameOver");
+
+function endGame(){
+    setTimeout(function(){
+    gameEnd =true;
+    viewControl.hiden(canvas);
+    viewControl.hiden(divHer);
+    viewControl.show(div);
+    viewControl.hiden(h1);
+    viewControl.show(h1fromHTML);
+
+}, 300000); //5 minutos son 300000 milisegundos, un minuto son 60000 milisegundos
+}
+
+endGame();
+
+function startTimer(m, s) {
+    //if(start){
+    if(s=== 0){
+        m = m-1;
+        s= 59;
+    }
+    if (s < 10) {
+        s = "0" + s;
+    };  
+    s= s-1;
+    //document.getElementById('txt').innerHTML =  m + ":" + s;
+    console.log("reloj"+ m+ s);
+    //}
+};
+
+    setTimeout(startTimer, 10);
+
 
 function onMouseUp(e){
     isMouseDown = false;
@@ -240,6 +275,7 @@ function onMouseUp(e){
 
             if(winner != null){
                 gameEnd = true;
+                timerOnStart=false;
                 setTimeout(function(){
                     viewControl.changeParagraphTurn(pTurnPlayer, turn);
                     viewControl.changeStartingPlayerParagraph(pStartPlayer, turn);
@@ -268,6 +304,8 @@ function onMouseUp(e){
     }
 }
 let turn = 1;
+
+
 function onMouseDown(e){
     board.draw();
     isMouseDown = true;
@@ -278,6 +316,10 @@ function onMouseDown(e){
     if(clickPiece  != null && gameEnd===false){
         //determina que el juego se comenzó a jugar
         start = true;
+        if(!timerOnStart){
+            startTimer();
+            timerOnStart= true;
+        }
         //oculta div con herramientas de apariencia de fichas y tablero
         viewControl.hiden(divHer);
         //oculta el mensaje (parrafo) del jugador que comienza
@@ -288,12 +330,6 @@ function onMouseDown(e){
         //guarda el numero de jugador del turno actual del jugador
         lastClickedPiece = clickPiece;
     }
-    /**
-
-    }
-      else{
-        start = false;
-    }*/
     drawPiece();
     frontBoard.draw();
 }
@@ -304,9 +340,10 @@ function onMouseMove(e){
     if(isMouseDown && lastClickedPiece != null && start=== true){
         if(game.playerTurnControl(turn, lastClickedPiece.getPlayer())){
             if(!lastClickedPiece.isInsideBoard(e.layerX, e.layerY, board.getPosX(), board.getPosY(), board.getWidth(), board.getHeight(), radio)){
-                lastClickedPiece.setPosition(e.layerX, e.layerY, lastClickedPiece.getInCell());
+                lastClickedPiece.setPosition(e.layerX, e.layerY, lastClickedPiece.getInCell(), lastClickedPiece.getPlayer(), board.getPosX(), board.getWidth());
             }else{
-                lastClickedPiece.setPositionOffBoard(e.layerX, e.layerY, board.getPosX(), board.getPosY(), board.getWidth(), radio);
+                lastClickedPiece.setPositionOffBoard(e.layerX, e.layerY, board.getPosX(), 
+                        board.getPosY(), board.getWidth(), radio, lastClickedPiece.getInCell());
             }
         }
     }
@@ -343,14 +380,17 @@ viewControl.changeStartingPlayerParagraph(pStartPlayer, turn);
 canvas.addEventListener('mousedown', onMouseDown, false);
 canvas.addEventListener('mouseup', onMouseUp, false);
 canvas.addEventListener('mousemove', onMouseMove, false);
+
 //recargar tablero una vez que la partida se gana y se aprieta en el botón correspondiente
 document.getElementById("btnLoadCanvas").addEventListener("click",function(){
+    console.log("hoal");
     viewControl.changeStartingPlayerParagraph(pStartPlayer, turn);
     viewControl.show(divPStartPTurn);
     start = false;
     gameEnd= false;
     loadBoardAndPieces();
     viewControl.show(divHer);
+    viewControl.show(canvas);
 });
 
 //cambia los colores de la fichas del jugador 1
