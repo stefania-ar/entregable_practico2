@@ -406,32 +406,23 @@ document.getElementById("dimensionBoard").addEventListener("change",function(e){
         frontBoard.draw();
     }
 });
-
-let imagenes = document.getElementsByClassName("pieza1");
-let array1= Array.from(imagenes);
-
-array1.forEach(img => {
-    img.onload=function(){
-        img.addEventListener("click", function () {
-            let source= img.getAttribute("src");
-            if(!start){
-                image1.src= source;
-            }
-        });
-    }
+//cambia imagen de fichas del player 1
+let btnsPlayer1 = document.querySelectorAll(".pieza1Player1");
+btnsPlayer1.forEach(boton => {
+	boton.addEventListener("click", function(e){
+        let source = e.path[0].getAttribute("src");
+        if(!start && source != null){
+            image1.src= source;
+        }
+    });
 });
-
-let imagePlayer2 = document.getElementsByClassName("pieza1Player2");
-let arrayImagePlayer2 = Array.from(imagePlayer2);
-
-arrayImagePlayer2.forEach(img => {
-    img.onload=function(){
-        img.addEventListener("click", function () {
-            console.log("click");
-            let source= img.getAttribute("src");
-            if(!start){
-                image2.src= source;
-            }
-        });
-    }
+//cambia imagen de fichas del player 2
+let btnsPlayer2 = document.querySelectorAll(".pieza1Player2");
+btnsPlayer2.forEach(boton => {
+	boton.addEventListener("click", function(e){
+        let source = e.path[0].getAttribute("src");
+        if(!start && source != null){
+            image2.src= source;
+        }
+    });
 });

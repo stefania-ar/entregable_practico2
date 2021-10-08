@@ -126,3 +126,9 @@ img{
     display: flex;
     margin-top: 2%;
 }
+
+.btnImage{
+    border-radius: 50%;
+    border: none;
+    background-color: transparent
+}
