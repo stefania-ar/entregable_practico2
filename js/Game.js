@@ -132,10 +132,6 @@ class Game {
 
     searchDiagonal(posCelda){
         let player = this.board.getCells()[posCelda].getPiece().getPlayer();
-        let newb= this.searchDiagonalUpLeft(posCelda);
-        let newb2= this.searchDiagonalDownRight(posCelda);
-        console.log(this.searchDiagonalUpRight(posCelda) + this.searchDiagonalDownLeft(posCelda)+1);
-        console.log(this.searchDiagonalUpLeft(posCelda) + this.searchDiagonalDownRight(posCelda)+1);
          console.log(" ");
          if((this.searchDiagonalUpRight(posCelda) + this.searchDiagonalDownLeft(posCelda))+1 >= this.cantPieceWinner ){//mayor a dos porque no lo toma a dos, apartir del 3 más la ficha en la que estoy hace 4 fichas;
             return {winner:true, player:player};

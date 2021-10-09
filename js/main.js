@@ -217,6 +217,7 @@ let h1fromHTML =document.getElementById("H1GameOver");
 
 function endGame(){
     gameEnd =true;
+    timerOnStart= false;
     viewControl.hiden(canvas);
     viewControl.hiden(divHer);
     viewControl.show(div);
@@ -227,9 +228,9 @@ function endGame(){
 
 //5 minutos son 300000 milisegundos, un minuto son 60000 milisegundos
 setInterval(endGame,300000);
-let m=0;
-let s=10;
-
+let m=4;
+let s=60;
+let txt= document.getElementById('txt');
 
 function startTimer() {
     if(m ==0 && s==0){
@@ -244,11 +245,9 @@ function startTimer() {
             }
             s= s-1;
             if (s < 10) {
-                //s = "0" + s;
-                console.log(m+ ":" + "0"+s);
-                document.getElementById('txt').innerHTML = m+ ":" + "0"+s;
+                txt.innerHTML = m+ ":" + "0"+s;
             }else{
-                document.getElementById('txt').innerHTML =  m + ":" + s;
+                txt.innerHTML =  m + ":" + s;
             }
         }
     }
@@ -290,6 +289,7 @@ function onMouseUp(e){
                     viewControl.hiden(canvas);
                     viewControl.resetHeight(divContenedor, 482);
                     viewControl.show(div);
+                    clearInterval(inter);
                 }, 3000);
             }else{
                 viewControl.changeParagraphTurn(pTurnPlayer, turn);
@@ -299,6 +299,7 @@ function onMouseUp(e){
         drawPiece();
         frontBoard.draw();
         if(!game.pieceOffGame(contPieceOffGame)){
+            clearInterval(inter);
             viewControl.changeStartingPlayerParagraph(pStartPlayer, turn);
             viewControl.show(divPStartPTurn);
             start = false;
@@ -399,9 +400,12 @@ document.getElementById("btnLoadCanvas").addEventListener("click",function(){
     loadBoardAndPieces();
     viewControl.show(divHer);
     viewControl.show(canvas);
-    document.getElementById("txt").innerHTML = "5:00"; //corregir volver a setear las variables m y s
-    if(!timerOnStart){ //fijarse qué sucede con el settimeout con los nuevos cmbios y cuando se recarga el tablero
-        //startTimer();
+    txt.innerHTML = "5:00"; //corregir volver a setear las variables m y s
+    m= 4;
+    s= 60;
+    console.log(timerOnStart+ "endgame "+ gameEnd);
+    if(!timerOnStart && start){ //fijarse qué sucede con el settimeout con los nuevos cmbios y cuando se recarga el tablero
+        
         inter= setInterval(startTimer, 1000);
         timerOnStart= true;
     }
