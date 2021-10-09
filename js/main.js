@@ -219,7 +219,6 @@ function transition(){
 let h1fromHTML =document.getElementById("H1GameOver");
 
 function endGame(){
-    setTimeout(function(){
     gameEnd =true;
     viewControl.hiden(canvas);
     viewControl.hiden(divHer);
@@ -227,27 +226,38 @@ function endGame(){
     viewControl.hiden(h1);
     viewControl.show(h1fromHTML);
 
-}, 300000); //5 minutos son 300000 milisegundos, un minuto son 60000 milisegundos
 }
 
-endGame();
+//5 minutos son 300000 milisegundos, un minuto son 60000 milisegundos
+setInterval(endGame,300000);
+let m=0;
+let s=10;
 
-function startTimer(m, s) {
-    //if(start){
-    if(s=== 0){
-        m = m-1;
-        s= 59;
+
+function startTimer() {
+    if(m ==0 && s==0){
+        clearInterval(inter);
+        endGame();
+        timerOnStart= false;
+    }else{
+        if(m>=0){
+            if(s== 0){
+                m = m-1;
+                s= 60;
+            }
+            s= s-1;
+            if (s < 10) {
+                //s = "0" + s; 
+                console.log(m+ ":" + "0"+s);
+                document.getElementById('txt').innerHTML = m+ ":" + "0"+s;
+                
+            }else{
+                document.getElementById('txt').innerHTML =  m + ":" + s;
+            }
+        }
     }
-    if (s < 10) {
-        s = "0" + s;
-    };  
-    s= s-1;
-    //document.getElementById('txt').innerHTML =  m + ":" + s;
-    console.log("reloj"+ m+ s);
-    //}
-};
 
-    setTimeout(startTimer, 10);
+};
 
 
 function onMouseUp(e){
@@ -304,7 +314,7 @@ function onMouseUp(e){
     }
 }
 let turn = 1;
-
+let inter;
 
 function onMouseDown(e){
     board.draw();
@@ -317,7 +327,8 @@ function onMouseDown(e){
         //determina que el juego se comenzó a jugar
         start = true;
         if(!timerOnStart){
-            startTimer();
+            //startTimer();
+            inter= setInterval(startTimer, 1000);
             timerOnStart= true;
         }
         //oculta div con herramientas de apariencia de fichas y tablero
@@ -391,6 +402,12 @@ document.getElementById("btnLoadCanvas").addEventListener("click",function(){
     loadBoardAndPieces();
     viewControl.show(divHer);
     viewControl.show(canvas);
+    document.getElementById("txt").innerHTML = "5:00"; //corregir volver a setear las variables m y s
+    if(!timerOnStart){ //fijarse qué sucede con el settimeout con los nuevos cmbios y cuando se recarga el tablero
+        //startTimer();
+        inter= setInterval(startTimer, 1000);
+        timerOnStart= true;
+    }
 });
 
 //cambia los colores de la fichas del jugador 1
