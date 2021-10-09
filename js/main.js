@@ -216,6 +216,7 @@ function transition(){
 let h1fromHTML =document.getElementById("H1GameOver");
 
 function endGame(){
+    clearInterval(inter);
     gameEnd =true;
     timerOnStart= false;
     viewControl.hiden(canvas);
@@ -227,16 +228,15 @@ function endGame(){
 }
 
 //5 minutos son 300000 milisegundos, un minuto son 60000 milisegundos
-setInterval(endGame,300000);
+//setInterval(endGame,300000);
 let m=4;
 let s=60;
 let txt= document.getElementById('txt');
 
 function startTimer() {
+    console.log("ejecutado" + s);
     if(m ==0 && s==0){
-        clearInterval(inter);
         endGame();
-        timerOnStart= false;
     }else{
         if(m>=0){
             if(s== 0){
@@ -251,7 +251,6 @@ function startTimer() {
             }
         }
     }
-
 };
 
 
@@ -323,9 +322,8 @@ function onMouseDown(e){
         //determina que el juego se comenzó a jugar
         start = true;
         if(!timerOnStart){
-            //startTimer();
-            inter= setInterval(startTimer, 1000);
-            timerOnStart= true;
+            inter = setInterval(startTimer, 1000);
+            timerOnStart = true;
         }
         //oculta div con herramientas de apariencia de fichas y tablero
         viewControl.hiden(divHer);
