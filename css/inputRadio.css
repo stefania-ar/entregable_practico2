@@ -51,7 +51,20 @@
   /* Cuando el botón de radio esté marcado, hace cambio de la opacidad */
   .container input:checked ~ .checkmark {
     /*background-color: #b3b3b3;*/
-    opacity: 60%;
+    height: 26px;
+    width: 26px;
+    border: solid 2px black;
   }
 
-  
+   /*Dimensiòn: Al pasar el mouse, agregue un color de fondo gris */
+   .lavel_dimension:hover{
+    background-color: blue;
+  }
+
+  /*Dimensiòn: Cuando el botón de radio esté marcado, hace cambio de la opacidad */
+  input:checked + label{
+    background-color: blue;
+  }
+  .lavel_dimension input:checked ~ .checkmark{
+    background-color: blue;
+  }

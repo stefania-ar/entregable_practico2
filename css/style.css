@@ -201,3 +201,16 @@ img{
 .div_timer{
     display: block;
 }
+
+.div_p_players{
+    display: flex;
+}
+
+.p_player1{
+    float: left;
+    margin-left: 4%;
+}
+.p_player2{
+    float: right;
+    margin-right: 3%;
+}

@@ -6,6 +6,10 @@ let divPStartPTurn= document.getElementById("div_pStart_pTurn");
 let divHer = document.getElementById("herramientas_de_apariencia");
 //div del DOM que contiene mensaje del jugador ganador
 let div = document.getElementById("winner");
+//parrafo del DOM que marca columna de fichas del jugador 1
+let pPlayer1 = document.getElementById("p_player1");
+//parrafo del DOM que marca columna de fichas del jugador 2
+let pPlayer2 = document.getElementById("p_player2");
 //h1 del DOM que mostrará el jugador ganador
 let h1 = document.getElementById("winnerPlayer");
 //parrafo del DOM que muestra si hay un color elejido que ya esté en uso en las piezas del otro jugador
@@ -132,7 +136,7 @@ function extractDimension(form){
 function initPieces(player){
     let cantPiece = cantPieceByPlayer;
     let y = 50;
-    let x = piecePixel;
+    let x = piecePixel*3;
     let marginY = (radio*2.3);
     if(player === 1){
         addPiecePlayer(image1, player, x, y, fill1, marginY, cantPiece, radio);
@@ -278,6 +282,8 @@ function onMouseUp(e){
                     viewControl.changeParagraphTurn(pTurnPlayer, turn);
                     viewControl.changeStartingPlayerParagraph(pStartPlayer, turn);
                     viewControl.hiden(divPStartPTurn);
+                    viewControl.hiden(pPlayer1);
+                    viewControl.hiden(pPlayer2);
                     h1.innerHTML = "Ganó el jugador "+winner;
                     viewControl.hiden(canvas);
                     viewControl.resetHeight(divContenedor, 482);
@@ -295,6 +301,8 @@ function onMouseUp(e){
             clearInterval(inter);
             viewControl.changeStartingPlayerParagraph(pStartPlayer, turn);
             viewControl.show(divPStartPTurn);
+            viewControl.hiden(pPlayer1);
+            viewControl.hiden(pPlayer2);
             start = false;
             gameEnd = false;
             loadBoardAndPieces();
@@ -381,12 +389,14 @@ canvas.addEventListener('mousedown', onMouseDown, false);
 canvas.addEventListener('mouseup', onMouseUp, false);
 canvas.addEventListener('mousemove', onMouseMove, false);
 
-//recargar tablero una vez que la partida se gana y se aprieta en el botón correspondiente
+//recargar tablero una vez que la partida se termina y se aprieta en el botón correspondiente
 document.getElementById("btnLoadCanvas").addEventListener("click",function(){
     viewControl.hiden(pTurnPlayer);
     viewControl.resetHeight(divContenedor, 950);
     viewControl.changeStartingPlayerParagraph(pStartPlayer, turn);
     viewControl.show(divPStartPTurn);
+    viewControl.show(pPlayer1);
+    viewControl.show(pPlayer2);
     start = false;
     gameEnd= false;
     loadBoardAndPieces();
