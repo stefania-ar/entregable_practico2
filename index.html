@@ -17,7 +17,7 @@
   </header>
   <div id="timer"></div>
   <p>Tu tiempo de juego es <span id="txt">5:00</span></p>
-  <div class="div_contenedor">
+  <div class="div_contenedor" id="div_contenedor">
     <div class="show" id="herramientas_de_apariencia">
       <div class="div_herramientas_piece">
         <div class="div_herramientas_player">
@@ -95,29 +95,26 @@
           </div>
         </div>
       </div>
-      <!--<div class="div_div_image_piece">
-
-    </div>-->
       <div class="div_pColor">
-        <p class="pColor" id="pColor"></p>
         <!--párrafo para mostrar mensaje de que el color ya fue elegido-->
+        <p class="pColor hiden" id="pColor"></p>
       </div>
       <div>
         <div class="div_dimension">
+          <p class="p_cant_piezas_en_lines">Cantidad de fichas en línea</p>
           <form class="form_dimension" id="dimensionBoard">
-            <p class="p">Elegir cantidad de fichas en línea</p>
-            <div class="div_input div_input_dimension">
+            <div class="div_input_dimension">
               <div class="div_circulo">
                 <input class="hiden" type="radio" id="dimension4" name="dimensionBoard" value="4">
-                <label for="dimension4">4</label>
+                <label class="lavel_dimension" for="dimension4">4</label>
               </div>
               <div class="div_circulo">
                 <input class="hiden" type="radio" id="dimension6" name="dimensionBoard" value="6" checked>
-                <label for="dimension6">6</label>
+                <label class="lavel_dimension" for="dimension6">6</label>
               </div>
               <div class="div_circulo">
                 <input class="hiden" type="radio" id="dimension8" name="dimensionBoard" value="8">
-                <label for="dimension8">8</label>
+                <label class="lavel_dimension" for="dimension8">8</label>
               </div>
             </div>
           </form>
@@ -126,11 +123,11 @@
     </div>
     <div class="show" id="div_pStart_pTurn">
       <div class="div_start_player">
-        <p class="pStartPlayer" id="pStartPlayer"></p>
         <!--párrafo para mostrar que jugador comienza el juego-->
+        <p class="pStartPlayer" id="pStartPlayer"></p>
       </div>
       <div class="div_start_player">
-        <p class="pStartPlayer" id="pTurnPlayer"></p>
+        <p class="pStartPlayer show" id="pTurnPlayer"></p>
         <!--párrafo para mostrar el turno-->
       </div>
     </div>
@@ -138,9 +135,9 @@
       <canvas class="show" id="canvas"></canvas>
     </div>
     <div class="div_winner hiden" id="winner">
-      <h1 id="winnerPlayer"></h1>
-      <h1 class="hiden" id="H1GameOver">¡Se terminó el juego!</h1>
-      <button id="btnLoadCanvas">jugar de nuevo</button>
+      <h1 class="h1_winner_player" id="winnerPlayer"></h1>
+      <h1 class="hiden h1_winner_player" id="H1GameOver">¡Se terminó el juego!</h1>
+      <button class="btn_jugar_de_nuevo" id="btnLoadCanvas">jugar de nuevo</button>
     </div>
   </div>
   </div>

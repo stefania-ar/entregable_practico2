@@ -1,3 +1,5 @@
+//div contenedor de todo, lo llamo en caso de ganar modifico su tamaño
+let divContenedor = document.getElementById("div_contenedor");
 //div del DOM que contiene formularios de apariencia
 let divPStartPTurn= document.getElementById("div_pStart_pTurn");
 //div del DOM que contiene formularios de apariencia
@@ -86,14 +88,11 @@ imageBoard.src="img/ventana.png";
 
 function dimension(fichasEnLinea){
     if(fichasEnLinea===4){
-        return {x: 7,
-                y: 6}
+        return {x: 7, y: 6}
     }else if(fichasEnLinea===6){
-        return{x: 8,
-               y: 7}
+        return{x: 8,  y: 7}
     }else{
-        return  {x: 9,
-                y: 8}
+        return  {x: 9,  y: 8}
     }
 }
 
@@ -131,7 +130,6 @@ function extractDimension(form){
 }
 
 function initPieces(player){
-    //pieces= [];
     let cantPiece = cantPieceByPlayer;
     let y = 50;
     let x = piecePixel;
@@ -197,7 +195,6 @@ function drawPiece(){
     }
 }
 let clickPiece;
-
 let xTransition;
 let xCell;
 let yCell;
@@ -247,10 +244,9 @@ function startTimer() {
             }
             s= s-1;
             if (s < 10) {
-                //s = "0" + s; 
+                //s = "0" + s;
                 console.log(m+ ":" + "0"+s);
                 document.getElementById('txt').innerHTML = m+ ":" + "0"+s;
-                
             }else{
                 document.getElementById('txt').innerHTML =  m + ":" + s;
             }
@@ -291,7 +287,9 @@ function onMouseUp(e){
                     viewControl.changeStartingPlayerParagraph(pStartPlayer, turn);
                     viewControl.hiden(divPStartPTurn);
                     h1.innerHTML = "Ganó el jugador "+winner;
-                    viewControl.viewWinner(div, canvas);
+                    viewControl.hiden(canvas);
+                    viewControl.resetHeight(divContenedor, 482);
+                    viewControl.show(div);
                 }, 3000);
             }else{
                 viewControl.changeParagraphTurn(pTurnPlayer, turn);
@@ -301,16 +299,13 @@ function onMouseUp(e){
         drawPiece();
         frontBoard.draw();
         if(!game.pieceOffGame(contPieceOffGame)){
-            console.log(contPieceOffGame);
             viewControl.changeStartingPlayerParagraph(pStartPlayer, turn);
             viewControl.show(divPStartPTurn);
             start = false;
             gameEnd = false;
             loadBoardAndPieces();
             viewControl.show(divHer);
-        }/*else{
-            gameEnd =true;
-        }*/
+        }
     }
 }
 let turn = 1;
@@ -379,7 +374,8 @@ function findClickedFigure(x, y){
 
 function loadBoardAndPieces(){
     pieces = [];
-    viewControl.hidenWinner(div, canvas);
+    viewControl.hiden(div);
+    viewControl.show(canvas);
     matrixBoard.cleanCells();
     initPieces(1);
     initPieces(2);
@@ -394,7 +390,8 @@ canvas.addEventListener('mousemove', onMouseMove, false);
 
 //recargar tablero una vez que la partida se gana y se aprieta en el botón correspondiente
 document.getElementById("btnLoadCanvas").addEventListener("click",function(){
-    console.log("hoal");
+    viewControl.hiden(pTurnPlayer);
+    viewControl.resetHeight(divContenedor, 950);
     viewControl.changeStartingPlayerParagraph(pStartPlayer, turn);
     viewControl.show(divPStartPTurn);
     start = false;

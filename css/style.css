@@ -32,7 +32,6 @@ img{
 
 .imagen{
     width: 40px;
-    
     border-radius: 50%;
     background-color: blue;
 }
@@ -45,7 +44,7 @@ img{
 }
 
 .div_contenedor{
-    height: 900px;
+    height: 950px;
 }
 
 .div_herramientas_piece{
@@ -63,19 +62,18 @@ img{
     text-align: center;
 }
 
-.pColor{
-    background-color: blue;
-}
-
-.div_input_dimension{
-    display: flex;
+.div_pColor{
     text-align: center;
-    align-items: center;
-    justify-content: center;
+}
+.pColor{
+    height: 40px;
+    padding-top: 10px;
+    background-color: rgb(255, 87, 87);
 }
 
 .div_dimension{
     text-align: center;
+    margin-top: 1%;
 }
 
 .form_Color_Player1{
@@ -88,16 +86,25 @@ img{
     /*background-color: chartreuse;*/
 }
 
+.form_dimension{
+    width: 12%;
+    margin: auto;
+}
+
 .div_circulo {
-    width: 30px;
-    height: 30px;
-    padding: 3px 0 0 0;
-    margin: 0% 1%;
+    width: 40px;
+    height: 40px;
+    margin-top: 5%;
+    margin-right: 5%;
     color: white;
     border: 2px solid blue;
     border-radius: 50%;
     background: red;
     text-align: center;
+}
+
+.div_input_dimension{
+    display: flex;
 }
 
 
@@ -108,6 +115,14 @@ img{
     font-size: 30px;
     border-radius: 30px;
     background-color: yellow;
+}
+
+.lavel_dimension{
+    display: block;
+    padding-top: 8px;
+    width: 40px;
+    height: 33px;
+    border-radius: 50%;
 }
 
 .p{
@@ -123,26 +138,54 @@ img{
     width: 80%;
 }
 
+.p_cant_piezas_en_lines{
+    color: white;
+    background-color: blue;
+    margin: auto;
+    border-radius: 30px;
+    width: 30%;
+}
+
 .div_div_image_piece{
     display: flex;
 }
 
 .div_image_piece{
+    width: 50%;
     margin: auto;
 }
 
 .div_herramientas_player{
     width: 50%;
-    margin: auto;
 }
 
 .div_herramientas{
     display: flex;
-    margin-top: 2%;
+    margin: 2% auto 0% auto;
+    width: 80%;
 }
 
 .btnImage{
     border-radius: 50%;
     border: none;
+    margin-top: 1%;
     background-color: transparent
 }
+
+.div_winner{
+    text-align: center;
+}
+
+.btn_jugar_de_nuevo{
+    background-color: rgb(118, 118, 255);
+    border: none;
+    border-radius: 30px;
+    width: 150px;
+    height: 50px;
+    margin-top: 5%;
+}
+
+.h1_winner_player{
+    margin-top: 5%;
+}
+
