@@ -19,7 +19,7 @@ let canvas = document.getElementById("canvas");
 /** @type {CanvasRenderingContext2D} */
 let ctx = canvas.getContext("2d");
 //setamos el tamaño del canvas a tamaño del la pantalla window
-canvas.width = window.innerWidth ;//document.documentElement.clientWidth,
+canvas.width = window.innerWidth;//document.documentElement.clientWidth,
 canvas.height = window.innerHeight-20;//document.documentElement.clientHeight
 let width = canvas.width;
 let height = canvas.height;
@@ -30,7 +30,7 @@ let fichasEnLinea = Number(extractDimension(formDimension));
 //se calcula la cantidad de piezas por jugador dependiendo de as dimensiones del tablero
 let cantPieceByPlayer = (dimension(fichasEnLinea).x * dimension(fichasEnLinea).y)/2;
 //se establece el radio de las piezas, ya que son creadas a partir de un círculo.
-let radio= 15;
+let radio= 20;
 //se establece el tamaño de las celdas del tablero
 let pixels = 70;
 //establece el tamaño de la imagen de las piezas
@@ -121,7 +121,7 @@ imageBoard.onload = function(){
     frontBoard.draw();
 }
 
-//extrae el valor del formulario de dimension del tablero
+//extrae el valor del formulario de dimensión del tablero
 function extractDimension(form){
     var data = new FormData(form);
     for (const entry of data) {
@@ -134,8 +134,7 @@ function initPieces(player){
     let y = 50;
     let x = piecePixel;
     let marginY = (radio*2.3);
-    if(player === 1){// hacer que vacíe las piezas que son del primer player, y que se agreguen después
-
+    if(player === 1){
         addPiecePlayer(image1, player, x, y, fill1, marginY, cantPiece, radio);
     }else{
         x = width - x;
@@ -207,7 +206,6 @@ function transition(){
         drawPiece();
         frontBoard.draw();
         if(yTransition < yCell){
-            //window.requestAnimationFrame(transition);
             transition();
         }
     }, 10);
@@ -228,13 +226,11 @@ function endGame(){
 }
 
 //5 minutos son 300000 milisegundos, un minuto son 60000 milisegundos
-//setInterval(endGame,300000);
 let m=4;
 let s=60;
 let txt= document.getElementById('txt');
 
 function startTimer() {
-    console.log("ejecutado" + s);
     if(m ==0 && s==0){
         endGame();
     }else{
@@ -266,8 +262,6 @@ function onMouseUp(e){
             clickPiece.setInCell(true);
             turn = game.changeTurn(turn);
             contPieceOffGame= game.decreasePieceOffGame(contPieceOffGame);
-            console.log(contPieceOffGame);
-            console.log(pieces.length);
             //hasta acá tiene que ir la ficha
             xCell= cell.getXStart()+((cell.getXEnd()-cell.getXStart())/2);
             yCell= cell.getYStart()+((cell.getYEnd()-cell.getYStart())/2);
@@ -332,6 +326,8 @@ function onMouseDown(e){
         //setea el turno y lo muestra el turno
         viewControl.changeParagraphTurn(pTurnPlayer, turn);
         viewControl.show(pTurnPlayer);
+        //seteo e tamaño del div contenedor del canvas para que se ajuste mejor
+        viewControl.resetHeight(divContenedor, 750);
         //guarda el numero de jugador del turno actual del jugador
         lastClickedPiece = clickPiece;
     }
@@ -341,13 +337,12 @@ function onMouseDown(e){
 
 function onMouseMove(e){
     board.draw();
-    //game.playerTurnControl(lastTurn, newTurn)
     if(isMouseDown && lastClickedPiece != null && start=== true){
         if(game.playerTurnControl(turn, lastClickedPiece.getPlayer())){
             if(!lastClickedPiece.isInsideBoard(e.layerX, e.layerY, board.getPosX(), board.getPosY(), board.getWidth(), board.getHeight(), radio)){
-                lastClickedPiece.setPosition(e.layerX, e.layerY, lastClickedPiece.getInCell(), lastClickedPiece.getPlayer(), board.getPosX(), board.getWidth());
+                lastClickedPiece.setPosition(e.layerX, e.layerY, lastClickedPiece.getInCell(), lastClickedPiece.getPlayer(), board.getPosX(), board.getWidth(), board.getPosY(), board.getHeight());
             }else{
-                lastClickedPiece.setPositionOffBoard(e.layerX, e.layerY, board.getPosX(), 
+                lastClickedPiece.setPositionOffBoard(e.layerX, e.layerY, board.getPosX(),
                         board.getPosY(), board.getWidth(), radio, lastClickedPiece.getInCell());
             }
         }
@@ -355,7 +350,6 @@ function onMouseMove(e){
     drawPiece();
     frontBoard.draw();
 }
-
 
 function clearCanvas(){
     ctx.clearRect(0, 0, width, height);
@@ -398,12 +392,10 @@ document.getElementById("btnLoadCanvas").addEventListener("click",function(){
     loadBoardAndPieces();
     viewControl.show(divHer);
     viewControl.show(canvas);
-    txt.innerHTML = "5:00"; //corregir volver a setear las variables m y s
+    txt.innerHTML = "5:00";
     m= 4;
     s= 60;
-    console.log(timerOnStart+ "endgame "+ gameEnd);
-    if(!timerOnStart && start){ //fijarse qué sucede con el settimeout con los nuevos cmbios y cuando se recarga el tablero
-        
+    if(!timerOnStart && start){
         inter= setInterval(startTimer, 1000);
         timerOnStart= true;
     }
@@ -446,7 +438,6 @@ document.getElementById("formColorPlayer2").addEventListener("change",function(e
 //cambiar dimensión de tablero
 document.getElementById("dimensionBoard").addEventListener("change",function(e){
     if(!start){
-        //clearCanvas();
         fichasEnLinea = Number(extractDimension(this));
         cantPieceByPlayer = (dimension(fichasEnLinea).x * dimension(fichasEnLinea).y)/2;
         game.setCantPieceWinner(fichasEnLinea);

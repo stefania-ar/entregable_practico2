@@ -13,13 +13,13 @@ footer{
 }
 
 img{
-    width: 1356px;
+    width: auto;
 }
 
 #txt{
     position: absolute;
     left: 30%;
-    transform: translate(200px, -50px);
+    transform: translate(200px, 20px);
     color: #ff0808;
     font-size: 60px;
     font-family: Orbitron;
@@ -36,6 +36,10 @@ img{
     background-color: blue;
 }
 
+.canvas{
+    margin: auto;
+}
+
 .show{
     display: block;
 }
@@ -44,6 +48,7 @@ img{
 }
 
 .div_contenedor{
+    width: auto;
     height: 950px;
 }
 
@@ -74,6 +79,10 @@ img{
 .div_dimension{
     text-align: center;
     margin-top: 1%;
+}
+
+.div_herramientas_de_apariencia{
+    width: auto;
 }
 
 .form_Color_Player1{
@@ -189,3 +198,6 @@ img{
     margin-top: 5%;
 }
 
+.div_timer{
+    display: block;
+}

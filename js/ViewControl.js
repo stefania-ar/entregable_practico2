@@ -1,4 +1,3 @@
-
 class ViewControl{
 
     hiden(element){
