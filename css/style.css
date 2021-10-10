@@ -214,3 +214,13 @@ img{
     float: right;
     margin-right: 3%;
 }
+
+.btn_reiniciar{
+    color: white;
+    margin: 2% auto;
+    background-color: rgb(0, 0, 255);
+    border: none;
+    border-radius: 30px;
+    width: 100px;
+    height: 40px;
+}

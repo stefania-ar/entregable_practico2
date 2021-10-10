@@ -34,15 +34,14 @@ class Game {
         }
     }
 
-    searchWinner(column, row, posCelda) {
-        if(this.searchByColumn().winner){ // hay que agregar el parametro que sea e numero de columna
+    searchWinner(row, posCelda) {
+        if(this.searchByColumn().winner){
             return this.searchByColumn().player;
         }else if (this.searchPiecesByRow(row).winner){
             return this.searchPiecesByRow(row).player;
         }else if (this.searchDiagonal(posCelda).winner){
             return this.searchDiagonal(posCelda).player;
-        }
-        else {
+        }else {
             return null;
         }
     }
@@ -85,7 +84,6 @@ class Game {
             }
         }
         if (contPiece >= this.cantPieceWinner) {
-            //console.log("columna evaluada: "+i);
             winner = true;
         } else {
             player = null;
@@ -116,24 +114,17 @@ class Game {
                 }
             }
         }
-            if(cont >=this.cantPieceWinner){
-                return {
-                    winner: true,
-                    player: player
-                }
-            }else{
-                return {
-                winner: false,
-                player: player
-            }
+        if(cont >=this.cantPieceWinner){
+            return { winner: true, player: player }
+        }else{
+            return { winner: false, player: player }
         }
 
     }
 
     searchDiagonal(posCelda){
         let player = this.board.getCells()[posCelda].getPiece().getPlayer();
-         console.log(" ");
-         if((this.searchDiagonalUpRight(posCelda) + this.searchDiagonalDownLeft(posCelda))+1 >= this.cantPieceWinner ){//mayor a dos porque no lo toma a dos, apartir del 3 más la ficha en la que estoy hace 4 fichas;
+         if((this.searchDiagonalUpRight(posCelda) + this.searchDiagonalDownLeft(posCelda))+1 >= this.cantPieceWinner ){
             return {winner:true, player:player};
         }else if(this.searchDiagonalUpLeft(posCelda) + this.searchDiagonalDownRight(posCelda)+1 >= this.cantPieceWinner){
             return {winner:true, player:player}
@@ -238,26 +229,22 @@ class Game {
         player = cells[posCelda].getPiece().getPlayer();
 
         while(equalsPlayer && i < cells.length){
-            //newCell = cells[i];
-
             if(i+(this.board.getCantY())+1 < cells.length){
-
                 nextCell = cells[i+(this.board.getCantY()+1)];
-                //if(this.trueCellDown(newCell, nextCell)){
-                    nextPiece = nextCell.getPiece();
-                    if(nextPiece != null){
-                        nextPlayer = nextPiece.getPlayer();
-                        if(player == nextPlayer){
-                            contPiece++;
-                        }else{
-                            equalsPlayer = false;
-                        }
+                nextPiece = nextCell.getPiece();
+                if(nextPiece != null){
+                    nextPlayer = nextPiece.getPlayer();
+                    if(player == nextPlayer){
+                        contPiece++;
                     }else{
                         equalsPlayer = false;
                     }
                 }else{
-                    equalsPlayer =false;
+                    equalsPlayer = false;
                 }
+            }else{
+                equalsPlayer =false;
+            }
             i += (this.board.getCantY()+1);
         }
         return contPiece;
@@ -272,12 +259,10 @@ class Game {
         player = cells[posCelda].getPiece().getPlayer();
 
         while(equalsPlayer && i >=posCelda-((this.board.getCantY()-1)*this.cantPieceWinner-1) && i> 0){
-
             if(i-(this.board.getCantY())+1 > 0){
             nextCell = cells[i-(this.board.getCantY()+1)];
 
-            if(nextCell != null){
-                //if(this.trueCellUp(newCell, nextCell)){
+                if(nextCell != null){
                     nextPiece = nextCell.getPiece();
                     if(nextPiece != null){
                         nextPlayer = nextPiece.getPlayer();

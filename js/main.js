@@ -1,3 +1,5 @@
+//boton del DOm que reinicia el juego
+let btnReiniciar = document.getElementById("btn_reiniciar");
 //div contenedor de todo, lo llamo en caso de ganar modifico su tamaño
 let divContenedor = document.getElementById("div_contenedor");
 //div del DOM que contiene formularios de apariencia
@@ -256,7 +258,20 @@ function startTimer() {
     }
 };
 
-
+function showEndGame(){
+    setTimeout(function(){
+        viewControl.changeParagraphTurn(pTurnPlayer, turn);
+        viewControl.changeStartingPlayerParagraph(pStartPlayer, turn);
+        viewControl.hiden(divPStartPTurn);
+        viewControl.hiden(pPlayer1);
+        viewControl.hiden(pPlayer2);
+        viewControl.hiden(btnReiniciar);
+        viewControl.hiden(canvas);
+        viewControl.resetHeight(divContenedor, 482);
+        viewControl.show(div);
+        clearInterval(inter);
+    }, 3000);
+}
 function onMouseUp(e){
     isMouseDown = false;
     if(clickPiece != null && !clickPiece.getInCell()){
@@ -275,24 +290,11 @@ function onMouseUp(e){
             rangeMove = (yCell-y)/30;
             xTransition = xCell;
             transition();
-            //acá bloquear que se pueda mover la ficha
-            let winner = game.searchWinner(cell.getNroColumn(), cell.getNroRow(), posCelda);
-
+            let winner = game.searchWinner(cell.getNroRow(), posCelda);
             if(winner != null){
                 gameEnd = true;
-                timerOnStart=false;
-                setTimeout(function(){
-                    viewControl.changeParagraphTurn(pTurnPlayer, turn);
-                    viewControl.changeStartingPlayerParagraph(pStartPlayer, turn);
-                    viewControl.hiden(divPStartPTurn);
-                    viewControl.hiden(pPlayer1);
-                    viewControl.hiden(pPlayer2);
-                    h1.innerHTML = "Ganó el jugador "+winner;
-                    viewControl.hiden(canvas);
-                    viewControl.resetHeight(divContenedor, 482);
-                    viewControl.show(div);
-                    clearInterval(inter);
-                }, 3000);
+                h1.innerHTML = "Ganó el jugador "+winner;
+                showEndGame();
             }else{
                 viewControl.changeParagraphTurn(pTurnPlayer, turn);
             }
@@ -301,15 +303,8 @@ function onMouseUp(e){
         drawPiece();
         frontBoard.draw();
         if(!game.pieceOffGame(contPieceOffGame)){
-            clearInterval(inter);
-            viewControl.changeStartingPlayerParagraph(pStartPlayer, turn);
-            viewControl.show(divPStartPTurn);
-            viewControl.hiden(pPlayer1);
-            viewControl.hiden(pPlayer2);
-            start = false;
-            gameEnd = false;
-            loadBoardAndPieces();
-            viewControl.show(divHer);
+            h1.innerHTML = "Los jugadores se quedaron sin fichas";
+            showEndGame();
         }
     }
 }
@@ -330,6 +325,8 @@ function onMouseDown(e){
             inter = setInterval(startTimer, 1000);
             timerOnStart = true;
         }
+        //muestra boton de reiniciar
+        viewControl.show(btnReiniciar);
         //oculta div con herramientas de apariencia de fichas y tablero
         viewControl.hiden(divHer);
         //oculta el mensaje (parrafo) del jugador que comienza
@@ -392,8 +389,10 @@ canvas.addEventListener('mousedown', onMouseDown, false);
 canvas.addEventListener('mouseup', onMouseUp, false);
 canvas.addEventListener('mousemove', onMouseMove, false);
 
-//recargar tablero una vez que la partida se termina y se aprieta en el botón correspondiente
-document.getElementById("btnLoadCanvas").addEventListener("click",function(){
+function resetGame(){
+    timerOnStart=false;
+    clearInterval(inter);
+    viewControl.hiden(btnReiniciar);
     viewControl.hiden(pTurnPlayer);
     viewControl.resetHeight(divContenedor, 950);
     viewControl.changeStartingPlayerParagraph(pStartPlayer, turn);
@@ -412,7 +411,11 @@ document.getElementById("btnLoadCanvas").addEventListener("click",function(){
         inter= setInterval(startTimer, 1000);
         timerOnStart= true;
     }
-});
+}
+//reinicia el juego
+btnReiniciar.addEventListener("click",  resetGame);
+//recargar tablero una vez que la partida se termina y se aprieta en el botón correspondiente
+document.getElementById("btnLoadCanvas").addEventListener("click",resetGame);
 
 //cambia los colores de la fichas del jugador 1
 document.getElementById("formColorPlayer1").addEventListener("change",function(e){
