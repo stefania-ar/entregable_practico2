@@ -221,12 +221,15 @@ function endGame(){
     clearInterval(inter);
     gameEnd =true;
     timerOnStart= false;
+    viewControl.hiden(pPlayer1);
+    viewControl.hiden(pPlayer2);
+    viewControl.hiden(pTurnPlayer);
     viewControl.hiden(canvas);
     viewControl.hiden(divHer);
     viewControl.show(div);
     viewControl.hiden(h1);
     viewControl.show(h1fromHTML);
-
+    viewControl.resetHeight(divContenedor, 482);
 }
 
 //5 minutos son 300000 milisegundos, un minuto son 60000 milisegundos
