@@ -2,28 +2,19 @@ class Cell{
     //al instanciar la clase por primera vez se debe iniciar con la pieza en null y ocupied en false.
     //no tiene pieza en ella, y no se encuentra ocupada.
     constructor(nroColumn, nroRow, xStart, xEnd, yStart, yEnd, piece){
+        //numero de columna en la que se encuentra
         this.nroColumn = nroColumn;
+        //numero de fila en la que se encuentra
         this.nroRow = nroRow;
+        //pixels que ocupa
         this.xStart = xStart;
         this.xEnd = xEnd;
         this.yStart = yStart;
         this.yEnd = yEnd;
+        //si contiene una ficha, comienza en null
         this.setPiece(piece);
     }
 
-    /*inSide(pieces){
-        let piece = null;
-        let find = false;
-        let i = 0;
-        while(!find && i< pieces.lenght){
-            if(pieces[i].inCell(this)){
-                piece = pieces[i];
-            }
-        }
-        //console.log(piece);
-        //return piece.getX() > this.xStart && piece.getX() < this.xEnd && piece.getY() >this.yStart && piece.getY() < this.yEnd;
-        return piece;
-    }*/
     setPiece(piece){
         this.piece = piece;
     }
@@ -51,14 +42,6 @@ class Cell{
 
     getNroRow(){
         return this.nroRow;
-    }
-
-    getCell(nroCol, nroRow){
-        console.log("ESTOY en cell. COL "+nroCol + " "+ this.getNroColumn() + " ROW " +nroRow);
-
-        if((nroCol=== this.getNroColumn()) && (nroRow=== this.getNroRow())){
-            return this;
-        }
     }
 
     hasPiece(){
