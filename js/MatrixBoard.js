@@ -4,14 +4,19 @@ class MatrixBoard extends Board {
         super(cantX, cantY, ctx, width, height, pixels);
         this.cells = this.createArrayCells();
     }
-
+    //crea array con las celdas y sus minimo de datos necesarios
     createArrayCells(){
         let arrayCells = [];
         let nroColumn = 1;
+        //recorre todo el espacio que ocuparioa el tablero
+        //para poder guardar los pixels que ocupa
+        //numero de column y numero de fila
         for (let x = this.PosX; x < this.PosX+this.width; x+=this.pixels) {
             let nroRow = 1;
             for (let y = this.posY; y < this.posY+this.height; y+=this.pixels) {
+                //crea un objeto celda
                 let cell = new Cell(nroColumn, nroRow, x, x+(this.pixels-1), y, y+(this.pixels-1), null);
+                //lo inserta en e array de las celdas
                 arrayCells.push(cell);
                 nroRow++;
             }
@@ -30,34 +35,24 @@ class MatrixBoard extends Board {
                 this.setPixel(ImageData, x, y, 0, 0, 0, 0);
             }
         }
-        //console.log(this.centerY());
 
         this.ctx.putImageData(ImageData, this.centerX(), this.centerY());
     };
 
-    //retorna la ultima celda libre
+    //retorna la ultima celda libre en una determinada columna
     lastFreeCell(column){
-        /** 
         let lastFreeCell;
-        //let cells = this.filterCells(column);
-        let lastFind = false;
-        let i = this.cantY-1;
-        while(!lastFind && i>=0){
-            if(cells[i].getPiece() == null){
-                lastFreeCell = cells[i];
-                lastFind = true;
-            }else{
-                i--;
-            }
-        }*/
-        let lastFreeCell;
-        //let cells = this.filterCells(column);
         let lastFind = false;
         let i = this.cells.length-1;
+        //comienza a recorrer el array desde el final
         while(!lastFind && i>=0){
+            //encuentra la ultima celda de la columna que se le pasó
             if(this.cells[i].getNroColumn() == column){
+                //si en esta la piece es nulla es que está libre
                 if(this.cells[i].getPiece() == null){
+                    //la guarda para retornarla
                     lastFreeCell = this.cells[i];
+                    //corta el while
                     lastFind = true;
                 }else{
                     i--;
@@ -72,30 +67,12 @@ class MatrixBoard extends Board {
             posEnArreglo : i
         };
     }
-    //filtra las celdas para quedarme con las de una columna en especifico
-    /*filterCells(column){
-        let arrayFilterCells = [];
-        let retunrAllCells = false;
-        let cont = this.cantY;
-        let i = 0;
-        while(!retunrAllCells && i<this.cells.length){
-            if(this.cells[i].getNroColumn() == column){
-                arrayFilterCells.push(this.cells[i]);
-                cont--;
-                if(cont == 0){
-                    retunrAllCells = true;
-                }
-            }
-            i++;
-        }
-        return arrayFilterCells;
-    }*/
     //pregunta si la pieza está dentro del rango del tablero
     isPieceWithinWidth(x, y) {
         return (x > this.PosX && x < this.PosX + this.width && y < this.posY);
 
     }
-    //retorna el numero de columna en el que se encuentra
+    //retorna el numero de columna en el que se encuentra la ficha
     whichColumn(x, y) {
         if(this.isPieceWithinWidth(x, y)){
             let column = 1;
@@ -115,34 +92,11 @@ class MatrixBoard extends Board {
             return -1;
         }
     }
-/*
-    pixelsXcolumn(nroCol) {
-        let fin = this.PosX + (this.pixels * nroCol);
-        let ini = fin - this.pixels;
-        console.log(fin + " inicio: " + ini);
-        return {
-            x_fin: fin,
-            x_ini: ini
-        }
-        //let ini= this.PosX + (nroCol *100);
-    }
-
-    pixelsYrow(nroFila) {
-        let fin = this.posY + (this.pixels * nroFila);
-        let ini = fin - this.pixels;
-        console.log(fin + " inicio: " + ini);
-        return {
-            y_fin: fin,
-            y_ini: ini
-        }
-    }
-*/
     getCells(){
         return this.cells;
     }
 
     getCellByPosition(y, x){
-        console.log("entro al cell")
         for (let i = 0; i < this.cells.length; i++) {
             if( this.cells[i].getNroColumn()===y && this.cells[i].getNroRow()===x){
                 return this.cells[i];
