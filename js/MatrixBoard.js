@@ -2,6 +2,7 @@ class MatrixBoard extends Board {
 
     constructor(cantX, cantY, ctx, width, height, pixels) {
         super(cantX, cantY, ctx, width, height, pixels);
+        //array donde se van a guardar las celdas para luego recorrerlasy buscar ganadores
         this.cells = this.createArrayCells();
     }
     //crea array con las celdas y sus minimo de datos necesarios
@@ -74,12 +75,14 @@ class MatrixBoard extends Board {
     }
     //retorna el numero de columna en el que se encuentra la ficha
     whichColumn(x, y) {
+        //pregunta si la pieza está dentro del rango del tablero
         if(this.isPieceWithinWidth(x, y)){
             let column = 1;
             let i = this.PosX;
             let find = false;
 
             while (!find && i < this.PosX + this.width) {
+                //pregunta si la cordenada x e y de la ficha se encuentra dentro de los pixels de la celda
                 if (x >= i && x <= i + this.pixels) {
                     find = true;
                 } else {
@@ -92,24 +95,19 @@ class MatrixBoard extends Board {
             return -1;
         }
     }
+
     getCells(){
         return this.cells;
     }
-
-    getCellByPosition(y, x){
-        for (let i = 0; i < this.cells.length; i++) {
-            if( this.cells[i].getNroColumn()===y && this.cells[i].getNroRow()===x){
-                return this.cells[i];
-            };
-        }
-    }
-
+//limpia las celdas sacandoles la ficha que guardaban
+//se usa en caso de reiniciar el juego
     cleanCells(){
         this.cells.forEach(function(cell) {
             cell.setPiece(null);
         });
     }
-
+//cambia la dimensión del tablero
+//y vuelve a crear el array de las celdas
     setDimension(dimension){
         super.setDimension(dimension);
         this.cells = [];

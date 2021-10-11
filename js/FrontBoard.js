@@ -12,7 +12,7 @@ class FrontBoard extends Board{
             }
         }
     }
-
+//se le setea la imagen ya que se crea con la imagen vacia y cuando esta se cargue se la agrega
     setImage(image){
         this.image = image;
     }
